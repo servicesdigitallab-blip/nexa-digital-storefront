@@ -209,5 +209,52 @@
         observer.observe(document.body, { childList: true, subtree: true });
       })();
     </script>
+  
+<script>
+  // Nexa Digital Global Analytics Tracking
+  (function() {
+    function trackEvent(endpoint, body) {
+      try {
+        fetch('https://nexaadigital-admin.vercel.app/api/track' + endpoint, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(body || {})
+        }).catch(e => {});
+      } catch(e) {}
+    }
+    
+    // Track page visit on load
+    trackEvent('/visit', { device: window.innerWidth < 768 ? 'mobile' : 'desktop' });
+    
+    // Send heartbeat every 30 seconds
+    setInterval(function() {
+      trackEvent('/heartbeat', {});
+    }, 30000);
+    
+    // Listen for clicks on tools and whatsapp
+    document.addEventListener('click', function(e) {
+      const link = e.target.closest('a') || e.target.closest('button');
+      if (!link) return;
+      
+      const href = link.href || '';
+      const text = (link.textContent || '').trim();
+      const isWhatsApp = href.includes('wa.me') || href.includes('whatsapp') || text.toLowerCase().includes('whatsapp');
+      
+      if (isWhatsApp) {
+        trackEvent('/click', {
+          toolId: window.location.pathname,
+          toolName: 'WhatsApp Order',
+          device: window.innerWidth < 768 ? 'mobile' : 'desktop'
+        });
+      }
+      
+      // If clicking a product link
+      if (href.includes('/product/')) {
+        trackEvent('/view', { toolId: href.split('/product/')[1] });
+      }
+    });
+  })();
+</script>
+
   </body>
 </html>
