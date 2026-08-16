@@ -71,6 +71,14 @@
       "destination": "/api/store-coupons.js"
     },
     {
+      "source": "/api/store-contact",
+      "destination": "/api/store-contact.js"
+    },
+    {
+      "source": "/api/store/contact",
+      "destination": "/api/store-contact.js"
+    },
+    {
       "source": "/api/track/:match*",
       "destination": "/api/track.js"
     },
