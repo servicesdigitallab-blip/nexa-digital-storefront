@@ -215,7 +215,7 @@
   (function() {
     function trackEvent(endpoint, body) {
       try {
-        fetch('https://nexaadigital-admin.vercel.app/api/track' + endpoint, {
+        fetch('/api/track' + endpoint, {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(body || {})

@@ -26,18 +26,41 @@ module.exports = async (req, res) => {
       fetch(`${supabaseUrl}/rest/v1/products?select=id,name,slug,price,image,category_id`, { headers: sbHdr }).catch(() => null)
     ]);
 
-    let pickIds = ['e892e52e-eb16-4e51-947c-bdd56439c661', 'c8ef47b8-9a29-42dd-9946-e7e0cc449e50'];
+    let pickItems = ['e892e52e-eb16-4e51-947c-bdd56439c661', 'c8ef47b8-9a29-42dd-9946-e7e0cc449e50'];
     if (setRes && setRes.ok) {
       const setRows = await setRes.json();
       if (setRows[0] && setRows[0].hero && Array.isArray(setRows[0].hero.popular_picks) && setRows[0].hero.popular_picks.length > 0) {
-        pickIds = setRows[0].hero.popular_picks;
+        pickItems = setRows[0].hero.popular_picks;
       }
     }
 
     const allProducts = (prodRes && prodRes.ok) ? await prodRes.json() : [];
 
-    const picks = pickIds.map((pid, idx) => {
-      const p = allProducts.find(x => x.id === pid || x.slug === pid || x.name.toLowerCase() === pid.toLowerCase()) || {};
+    const picks = pickItems.map((item, idx) => {
+      // New format: item is a full object with product_id, name, icon_url, etc.
+      if (typeof item === 'object' && item !== null) {
+        const pid = item.product_id || '';
+        const p = allProducts.find(x => x.id === pid) || {};
+        const name = item.name || p.name || 'Tool';
+        const image = item.icon_url || p.image || '/placeholder.svg';
+        const price = item.price !== undefined ? Number(item.price) : (p.price || 0);
+        const slug = p.slug || name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        return {
+          id: item.id || ('pick_' + (idx + 1)),
+          product_id: p.id || pid,
+          name: name,
+          slug: slug,
+          price: price,
+          category_name: item.category_name || 'AI Tools',
+          badge: item.badge || (idx === 0 ? '🔥 POPULAR' : '⚡ TOP VALUE'),
+          icon_url: image,
+          enabled: item.enabled !== false
+        };
+      }
+
+      // Old format: item is a plain string (product UUID)
+      const pid = item;
+      const p = allProducts.find(x => x.id === pid || x.slug === pid) || {};
       const name = p.name || (pid === 'e892e52e-eb16-4e51-947c-bdd56439c661' ? 'ChatGPT' : 'CapCut Pro');
       const image = p.image || (name.toLowerCase().includes('chatgpt') ? '/product-images/c9cfe01e69991fec7f9caa41aa58de96.png' : '/product-images/capcut-pro.jpg');
       const price = Number(p.price || (name.toLowerCase().includes('chatgpt') ? 2300 : 1000));
@@ -54,7 +77,7 @@ module.exports = async (req, res) => {
         icon_url: image,
         enabled: true
       };
-    });
+    }).filter(p => p.enabled !== false);
 
     return res.status(200).json(picks);
   } catch (e) {
