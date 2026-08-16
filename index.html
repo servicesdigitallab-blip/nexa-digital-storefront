@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <title>Nexa Digital — Your Trusted Source for Digital Subscriptions</title>
+    <meta name="description" content="Nexa Digital — AI, SEO &amp; Creative subscriptions delivered instantly, backed by support. Verified, secure, and affordable digital tools.">
+    <meta name="keywords" content="Nexa Digital, digital subscriptions, ChatGPT Plus, Canva Pro, Claude, SEMRush, AI tools, SEO tools, creative subscriptions" />
+    <meta name="author" content="Nexa Digital" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://nexadigital.com/" />
+
+    <!-- High-Performance Preconnects & Preloads -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://ydbkvjgotjsjjfvruoei.supabase.co">
+    <link rel="dns-prefetch" href="https://ydbkvjgotjsjjfvruoei.supabase.co">
+    <link rel="modulepreload" href="/assets/index-DZT4_D0V.js">
+    <link rel="preload" href="/assets/index-g2WHYVtL.css" as="style">
+
+    <!-- Fonts: Poppins (matches nexadigital.com) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Caveat:wght@500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&display=swap" rel="stylesheet">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nexadigital.com/" />
+    <meta property="og:site_name" content="Nexa Digital" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Nexa Digital",
+      "url": "https://nexadigital.com/",
+      "logo": "https://nexadigital.com/logo.png",
+      "description": "Your Trusted Source for Digital Subscriptions — AI, SEO & Creative subscriptions delivered instantly."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Nexa Digital",
+      "url": "https://nexadigital.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://nexadigital.com/tools?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- Force dark theme -->
+    <script>
+      document.documentElement.classList.add('dark');
+      document.documentElement.style.colorScheme = 'dark';
+    </script>
+    
+    <meta property="og:image" content="https://nexadigital.com/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Nexa Digital — Your Trusted Source for Premium Digital Tools & Subscriptions">
+    <meta name="twitter:image" content="https://nexadigital.com/og-image.jpg">
+    <meta property="og:title" content="Nexa Digital — Your Trusted Source for Digital Subscriptions">
+    <meta name="twitter:title" content="Nexa Digital — Your Trusted Source for Digital Subscriptions">
+    <meta property="og:description" content="Nexa Digital — AI, SEO &amp; Creative subscriptions delivered instantly, backed by support. Verified, secure, and affordable digital tools.">
+    <meta name="twitter:description" content="Nexa Digital — AI, SEO &amp; Creative subscriptions delivered instantly, backed by support. Verified, secure, and affordable digital tools.">
+    <script type="module" crossorigin src="/assets/index-DZT4_D0V.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-g2WHYVtL.css">
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- 100% Exact Real Tracking — No Guesses, No Inflation -->
+    <script>
+      (function() {
+        var sId = sessionStorage.getItem('nexa_sess_id');
+        if (!sId) {
+          sId = 'sess_' + Math.random().toString(36).substring(2, 10) + Date.now();
+          sessionStorage.setItem('nexa_sess_id', sId);
+        }
+        var isMobile = window.innerWidth <= 768 || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+        var dev = isMobile ? 'mobile' : 'desktop';
+        var hdr = { 'Content-Type': 'application/json' };
+
+        // ─── 1. Record exactly ONE visit per page load ───
+        // Use a flag so even SPA re-renders won't double-count
+        var visitKey = 'nexa_visited_' + window.location.pathname;
+        if (!sessionStorage.getItem(visitKey)) {
+          sessionStorage.setItem(visitKey, '1');
+          fetch('/api/track/visit', {
+            method: 'POST', headers: hdr,
+            body: JSON.stringify({ sessionId: sId, device: dev, path: window.location.pathname })
+          }).catch(function(){});
+        }
+
+        // ─── 2. Heartbeat every 25s — only keeps session alive, does NOT add visits ───
+        setInterval(function() {
+          fetch('/api/track/heartbeat', {
+            method: 'POST', headers: hdr,
+            body: JSON.stringify({ sessionId: sId })
+          }).catch(function(){});
+        }, 25000);
+
+        // ─── 3. Track product detail view exactly once per session per product ───
+        var path = window.location.pathname;
+        if (path.startsWith('/product/')) {
+          var toolSlug = path.replace('/product/', '').split('/')[0].split('?')[0];
+          var viewKey = 'nexa_viewed_' + toolSlug;
+          if (toolSlug && !sessionStorage.getItem(viewKey)) {
+            sessionStorage.setItem(viewKey, '1');
+            fetch('/api/track/view', {
+              method: 'POST', headers: hdr,
+              body: JSON.stringify({ toolId: toolSlug })
+            }).catch(function(){});
+          }
+        }
+
+        // ─── 4. Track exact WhatsApp order clicks (no duplicates) ───
+        document.addEventListener('click', function(e) {
+          var target = e.target ? e.target.closest('a, button') : null;
+          if (!target) return;
+          var href = target.getAttribute('href') || '';
+          var text = (target.innerText || '').toLowerCase();
+
+          var isWaClick = href.includes('wa.me') || href.includes('whatsapp.com') || 
+                          (text.includes('order') && text.includes('whatsapp'));
+          if (!isWaClick) return;
+
+          var heading = document.querySelector('h1');
+          var toolName = heading ? heading.innerText.trim() : '';
+          var planEl = document.querySelector('[data-selected-plan]') || 
+                       document.querySelector('.ring-2.ring-primary');
+          var planName = planEl ? planEl.innerText.split('\n')[0].trim() : 'Standard';
+
+          var toolId = '';
+          if (window.location.pathname.startsWith('/product/')) {
+            toolId = window.location.pathname.replace('/product/', '').split('/')[0].split('?')[0];
+          }
+
+          fetch('/api/track/click', {
+            method: 'POST', headers: hdr,
+            body: JSON.stringify({
+              toolId: toolId,
+              toolName: toolName || 'Unknown',
+              planName: planName,
+              device: dev
+            })
+          }).catch(function(){});
+        }, true);
+
+        // ─── 5. Track SPA navigation (React Router) ───
+        var lastPath = window.location.pathname;
+        var observer = new MutationObserver(function() {
+          if (window.location.pathname !== lastPath) {
+            lastPath = window.location.pathname;
+            var navKey = 'nexa_visited_' + lastPath;
+            if (!sessionStorage.getItem(navKey)) {
+              sessionStorage.setItem(navKey, '1');
+              fetch('/api/track/visit', {
+                method: 'POST', headers: hdr,
+                body: JSON.stringify({ sessionId: sId, device: dev, path: lastPath })
+              }).catch(function(){});
+            }
+            // Track product view on SPA navigation
+            if (lastPath.startsWith('/product/')) {
+              var slug = lastPath.replace('/product/', '').split('/')[0].split('?')[0];
+              var vk = 'nexa_viewed_' + slug;
+              if (slug && !sessionStorage.getItem(vk)) {
+                sessionStorage.setItem(vk, '1');
+                fetch('/api/track/view', {
+                  method: 'POST', headers: hdr,
+                  body: JSON.stringify({ toolId: slug })
+                }).catch(function(){});
+              }
+            }
+          }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+      })();
+    </script>
+  </body>
+</html>
