@@ -3,6 +3,13 @@ const path = require('path');
 
 const supabaseUrl = process.env.SUPABASE_URL || 'https://ydbkvjgotjsjjfvruoei.supabase.co';
 const supabaseKey = process.env.SUPABASE_ANON_KEY || 'sb_publishable_5jsN-ZSP1YLw4Tu_mBg2Jw_5hv0HgOv';
+const sbHdr = {
+  'apikey': supabaseKey,
+  'Authorization': `Bearer ${supabaseKey}`,
+  'Content-Type': 'application/json'
+};
+
+const SETTINGS_ID = '066a4027-9df8-45ee-ac41-32f26f11a507';
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -12,38 +19,68 @@ module.exports = async (req, res) => {
 
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  // Try Supabase hero_cards
   try {
-    const sbHdr = { 'apikey': supabaseKey, 'Authorization': `Bearer ${supabaseKey}` };
-    const heroRes = await fetch(`${supabaseUrl}/rest/v1/hero_cards?select=*,products(id,slug,name,price,categories(name))&order=sort_order.asc`, { headers: sbHdr });
-    if (heroRes && heroRes.ok) {
-      const hero = await heroRes.json();
-      if (hero && hero.length > 0) {
-        const picks = hero.filter(h => h.enabled !== false).map(h => ({
-          id: h.id,
-          product_id: h.product_id,
-          name: h.products ? h.products.name : 'Tool',
-          slug: h.products ? (h.products.slug || h.products.id) : h.product_id,
-          price: h.products ? h.products.price : 1000,
-          category_name: h.products && h.products.categories ? h.products.categories.name : 'AI Tools',
-          badge: h.badge || '🔥 POPULAR',
-          icon_url: h.icon_url,
-          enabled: h.enabled !== false
-        }));
-        return res.status(200).json(picks);
+    // 1. Read Popular Picks from Supabase site_settings
+    const [setRes, prodRes] = await Promise.all([
+      fetch(`${supabaseUrl}/rest/v1/site_settings?id=eq.${SETTINGS_ID}&select=hero`, { headers: sbHdr }).catch(() => null),
+      fetch(`${supabaseUrl}/rest/v1/products?select=id,name,slug,price,image,category_id`, { headers: sbHdr }).catch(() => null)
+    ]);
+
+    let pickIds = ['e892e52e-eb16-4e51-947c-bdd56439c661', 'c8ef47b8-9a29-42dd-9946-e7e0cc449e50'];
+    if (setRes && setRes.ok) {
+      const setRows = await setRes.json();
+      if (setRows[0] && setRows[0].hero && Array.isArray(setRows[0].hero.popular_picks) && setRows[0].hero.popular_picks.length > 0) {
+        pickIds = setRows[0].hero.popular_picks;
       }
     }
-  } catch (e) {}
 
-  // Fallback to store.json
-  try {
-    const storePath = path.join(__dirname, '..', 'data', 'store.json');
-    if (fs.existsSync(storePath)) {
-      const store = JSON.parse(fs.readFileSync(storePath, 'utf8'));
-      const active = (store.popular_picks || []).filter(p => p.enabled !== false);
-      return res.status(200).json(active);
-    }
-  } catch (e) {}
+    const allProducts = (prodRes && prodRes.ok) ? await prodRes.json() : [];
 
-  res.status(200).json([]);
+    const picks = pickIds.map((pid, idx) => {
+      const p = allProducts.find(x => x.id === pid || x.slug === pid || x.name.toLowerCase() === pid.toLowerCase()) || {};
+      const name = p.name || (pid === 'e892e52e-eb16-4e51-947c-bdd56439c661' ? 'ChatGPT' : 'CapCut Pro');
+      const image = p.image || (name.toLowerCase().includes('chatgpt') ? '/product-images/c9cfe01e69991fec7f9caa41aa58de96.png' : '/product-images/capcut-pro.jpg');
+      const price = Number(p.price || (name.toLowerCase().includes('chatgpt') ? 2300 : 1000));
+      const slug = p.slug || name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+      return {
+        id: 'pick_' + (idx + 1),
+        product_id: p.id || pid,
+        name: name,
+        slug: slug,
+        price: price,
+        category_name: name.toLowerCase().includes('chatgpt') ? 'AI Tools' : 'Design Tools',
+        badge: idx === 0 ? '🔥 POPULAR' : '⚡ TOP VALUE',
+        icon_url: image,
+        enabled: true
+      };
+    });
+
+    return res.status(200).json(picks);
+  } catch (e) {
+    return res.status(200).json([
+      {
+        id: 'pick_1',
+        product_id: 'e892e52e-eb16-4e51-947c-bdd56439c661',
+        name: 'ChatGPT',
+        slug: 'chatgpt',
+        price: 2300,
+        category_name: 'AI Tools',
+        badge: '🔥 POPULAR',
+        icon_url: '/product-images/c9cfe01e69991fec7f9caa41aa58de96.png',
+        enabled: true
+      },
+      {
+        id: 'pick_2',
+        product_id: 'c8ef47b8-9a29-42dd-9946-e7e0cc449e50',
+        name: 'CapCut Pro',
+        slug: 'capcut-pro',
+        price: 1000,
+        category_name: 'Design Tools',
+        badge: '⚡ TOP VALUE',
+        icon_url: '/product-images/capcut-pro.jpg',
+        enabled: true
+      }
+    ]);
+  }
 };
