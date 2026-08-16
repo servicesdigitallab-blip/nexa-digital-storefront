@@ -76,28 +76,51 @@
     <meta name="twitter:title" content="Nexa Digital — Your Trusted Source for Digital Subscriptions">
     <meta property="og:description" content="Nexa Digital — AI, SEO &amp; Creative subscriptions delivered instantly, backed by support. Verified, secure, and affordable digital tools.">
     <meta name="twitter:description" content="Nexa Digital — AI, SEO &amp; Creative subscriptions delivered instantly, backed by support. Verified, secure, and affordable digital tools.">
+    
+    <!-- Instant Fast Pre-cache for 0ms Product Navigation -->
+    <script>
+      (function() {
+        try {
+          var cached = localStorage.getItem('nexa_tools_cache_v2');
+          if (cached) {
+            window.__nexa_tools_cache = JSON.parse(cached);
+          }
+        } catch(e) {}
+        
+        fetch('/api/store/tools?_=' + Date.now(), { cache: 'no-store' })
+          .then(function(r) { return r.ok ? r.json() : null; })
+          .then(function(tools) {
+            if (Array.isArray(tools) && tools.length > 0) {
+              window.__nexa_tools_cache = tools;
+              try { localStorage.setItem('nexa_tools_cache_v2', JSON.stringify(tools)); } catch(e) {}
+            }
+          })
+          .catch(function() {});
+      })();
+    </script>
+
     <script type="module" crossorigin src="/assets/index-DZT4_D0V.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-g2WHYVtL.css">
   
-<script>
-  (function() {
-    const originalError = console.error;
-    console.error = function(...args) {
-      originalError.apply(console, args);
-      const str = args.map(a => (typeof a === 'object' ? (a.stack || JSON.stringify(a)) : a)).join(' ');
-      if (str.includes('React') || str.includes('Error') || str.includes('ReferenceError') || str.includes('TypeError')) {
-        const div = document.createElement('div');
-        div.style.position = 'fixed';
-        div.style.top = '0'; div.style.left = '0'; div.style.width = '100%'; div.style.zIndex = '999999';
-        div.style.backgroundColor = 'darkred'; div.style.color = 'white'; div.style.padding = '20px';
-        div.style.fontFamily = 'monospace'; div.style.fontSize = '12px'; div.style.overflow = 'auto'; div.style.maxHeight = '100vh';
-        div.innerHTML = '<b>INTERCEPTED REACT CRASH:</b><br/><pre style="white-space: pre-wrap;">' + str + '</pre>';
-        document.body.appendChild(div);
-      }
-    };
-  })();
-</script>
-</head>
+    <script>
+      (function() {
+        const originalError = console.error;
+        console.error = function(...args) {
+          originalError.apply(console, args);
+          const str = args.map(a => (typeof a === 'object' ? (a.stack || JSON.stringify(a)) : a)).join(' ');
+          if (str.includes('React') || str.includes('Error') || str.includes('ReferenceError') || str.includes('TypeError')) {
+            const div = document.createElement('div');
+            div.style.position = 'fixed';
+            div.style.top = '0'; div.style.left = '0'; div.style.width = '100%'; div.style.zIndex = '999999';
+            div.style.backgroundColor = 'darkred'; div.style.color = 'white'; div.style.padding = '20px';
+            div.style.fontFamily = 'monospace'; div.style.fontSize = '12px'; div.style.overflow = 'auto'; div.style.maxHeight = '100vh';
+            div.innerHTML = '<b>INTERCEPTED REACT CRASH:</b><br/><pre style="white-space: pre-wrap;">' + str + '</pre>';
+            document.body.appendChild(div);
+          }
+        };
+      })();
+    </script>
+  </head>
   <body>
     <div id="root"></div>
 
@@ -114,7 +137,6 @@
         var hdr = { 'Content-Type': 'application/json' };
 
         // ─── 1. Record exactly ONE visit per page load ───
-        // Use a flag so even SPA re-renders won't double-count
         var visitKey = 'nexa_visited_' + window.location.pathname;
         if (!sessionStorage.getItem(visitKey)) {
           sessionStorage.setItem(visitKey, '1');
@@ -124,7 +146,7 @@
           }).catch(function(){});
         }
 
-        // ─── 2. Heartbeat every 25s — only keeps session alive, does NOT add visits ───
+        // ─── 2. Heartbeat every 25s ───
         setInterval(function() {
           fetch('/api/track/heartbeat', {
             method: 'POST', headers: hdr,
@@ -132,7 +154,7 @@
           }).catch(function(){});
         }, 25000);
 
-        // ─── 3. Track product detail view exactly once per session per product ───
+        // ─── 3. Track product detail view ───
         var path = window.location.pathname;
         if (path.startsWith('/product/')) {
           var toolSlug = path.replace('/product/', '').split('/')[0].split('?')[0];
@@ -146,7 +168,7 @@
           }
         }
 
-        // ─── 4. Track exact WhatsApp order clicks (no duplicates) ───
+        // ─── 4. Track WhatsApp order clicks ───
         document.addEventListener('click', function(e) {
           var target = e.target ? e.target.closest('a, button') : null;
           if (!target) return;
@@ -161,7 +183,8 @@
           var toolName = heading ? heading.innerText.trim() : '';
           var planEl = document.querySelector('[data-selected-plan]') || 
                        document.querySelector('.ring-2.ring-primary');
-          var planName = planEl ? planEl.innerText.split('\n')[0].trim() : 'Standard';
+          var planName = planEl ? planEl.innerText.split('
+')[0].trim() : 'Standard';
 
           var toolId = '';
           if (window.location.pathname.startsWith('/product/')) {
@@ -179,7 +202,7 @@
           }).catch(function(){});
         }, true);
 
-        // ─── 5. Track SPA navigation (React Router) ───
+        // ─── 5. Track SPA navigation ───
         var lastPath = window.location.pathname;
         var observer = new MutationObserver(function() {
           if (window.location.pathname !== lastPath) {
@@ -192,7 +215,6 @@
                 body: JSON.stringify({ sessionId: sId, device: dev, path: lastPath })
               }).catch(function(){});
             }
-            // Track product view on SPA navigation
             if (lastPath.startsWith('/product/')) {
               var slug = lastPath.replace('/product/', '').split('/')[0].split('?')[0];
               var vk = 'nexa_viewed_' + slug;
@@ -209,52 +231,5 @@
         observer.observe(document.body, { childList: true, subtree: true });
       })();
     </script>
-  
-<script>
-  // Nexa Digital Global Analytics Tracking
-  (function() {
-    function trackEvent(endpoint, body) {
-      try {
-        fetch('/api/track' + endpoint, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(body || {})
-        }).catch(e => {});
-      } catch(e) {}
-    }
-    
-    // Track page visit on load
-    trackEvent('/visit', { device: window.innerWidth < 768 ? 'mobile' : 'desktop' });
-    
-    // Send heartbeat every 30 seconds
-    setInterval(function() {
-      trackEvent('/heartbeat', {});
-    }, 30000);
-    
-    // Listen for clicks on tools and whatsapp
-    document.addEventListener('click', function(e) {
-      const link = e.target.closest('a') || e.target.closest('button');
-      if (!link) return;
-      
-      const href = link.href || '';
-      const text = (link.textContent || '').trim();
-      const isWhatsApp = href.includes('wa.me') || href.includes('whatsapp') || text.toLowerCase().includes('whatsapp');
-      
-      if (isWhatsApp) {
-        trackEvent('/click', {
-          toolId: window.location.pathname,
-          toolName: 'WhatsApp Order',
-          device: window.innerWidth < 768 ? 'mobile' : 'desktop'
-        });
-      }
-      
-      // If clicking a product link
-      if (href.includes('/product/')) {
-        trackEvent('/view', { toolId: href.split('/product/')[1] });
-      }
-    });
-  })();
-</script>
-
   </body>
 </html>
