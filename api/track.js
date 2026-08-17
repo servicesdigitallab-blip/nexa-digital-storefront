@@ -50,7 +50,7 @@ module.exports = async (req, res) => {
 
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  const urlPath = (req.url || '').split('?')[0].replace('/api/track', '');
+  const rawUrl = (req.url || '').toLowerCase();
   const now = Date.now();
 
   // Clean stale live sessions older than 45 seconds
@@ -64,11 +64,51 @@ module.exports = async (req, res) => {
       try { body = JSON.parse(body); } catch(e) {}
     }
 
-    const sid = body.sessionId || req.headers['x-forwarded-for'] || 'sess_' + Math.random().toString(36).slice(2, 8);
+    const headers = req.headers || {};
+    const sid = body.sessionId || headers['x-forwarded-for'] || headers['x-real-ip'] || ('sess_' + Math.random().toString(36).slice(2, 8));
     liveSessions[sid] = now;
 
-    // 1. Visit
-    if (urlPath === '/visit' || urlPath === '') {
+    // Detect action type from URL or body
+    const isClick = rawUrl.includes('click') || body.type === 'click';
+    const isView = rawUrl.includes('view') || body.type === 'view';
+    const isHeartbeat = rawUrl.includes('heartbeat') || body.type === 'heartbeat';
+    const isVisit = rawUrl.includes('visit') || body.type === 'visit' || (!isClick && !isView && !isHeartbeat);
+
+    // 1. WhatsApp / Order Click
+    if (isClick) {
+      const stats = await getCloudAnalytics();
+      stats.total_clicks = (stats.total_clicks || 0) + 1;
+      if (!Array.isArray(stats.tool_clicks)) stats.tool_clicks = [];
+      stats.tool_clicks.push({
+        id: 'c_' + now,
+        toolId: body.toolId || 'general',
+        toolName: body.toolName || 'WhatsApp Click',
+        planName: body.planName || 'Standard',
+        device: body.device || 'desktop',
+        timestamp: now
+      });
+      if (stats.tool_clicks.length > 500) stats.tool_clicks = stats.tool_clicks.slice(-500);
+      stats.last_updated = new Date().toISOString();
+      await saveCloudAnalytics(stats);
+      return res.status(200).json({ success: true, total_clicks: stats.total_clicks });
+    }
+
+    // 2. View Tool
+    if (isView) {
+      const stats = await getCloudAnalytics();
+      stats.total_tool_views = (stats.total_tool_views || 0) + 1;
+      stats.last_updated = new Date().toISOString();
+      await saveCloudAnalytics(stats);
+      return res.status(200).json({ success: true, total_tool_views: stats.total_tool_views });
+    }
+
+    // 3. Heartbeat
+    if (isHeartbeat) {
+      return res.status(200).json({ success: true, live: Math.max(1, Object.keys(liveSessions).length) });
+    }
+
+    // 4. Visit
+    if (isVisit) {
       const stats = await getCloudAnalytics();
       stats.total_visits = (stats.total_visits || 0) + 1;
       if (body.device === 'mobile') {
@@ -78,40 +118,7 @@ module.exports = async (req, res) => {
       }
       stats.last_updated = new Date().toISOString();
       await saveCloudAnalytics(stats);
-      return res.status(200).json({ success: true });
-    }
-
-    // 2. Heartbeat
-    if (urlPath === '/heartbeat') {
-      return res.status(200).json({ success: true, live: Math.max(1, Object.keys(liveSessions).length) });
-    }
-
-    // 3. View Tool
-    if (urlPath === '/view') {
-      const stats = await getCloudAnalytics();
-      stats.total_tool_views = (stats.total_tool_views || 0) + 1;
-      stats.last_updated = new Date().toISOString();
-      await saveCloudAnalytics(stats);
-      return res.status(200).json({ success: true });
-    }
-
-    // 4. WhatsApp / Order Click
-    if (urlPath === '/click') {
-      const stats = await getCloudAnalytics();
-      stats.total_clicks = (stats.total_clicks || 0) + 1;
-      if (!Array.isArray(stats.tool_clicks)) stats.tool_clicks = [];
-      stats.tool_clicks.push({
-        id: 'c_' + now,
-        toolId: body.toolId,
-        toolName: body.toolName || 'Tool',
-        planName: body.planName || 'Standard',
-        device: body.device || 'desktop',
-        timestamp: now
-      });
-      if (stats.tool_clicks.length > 500) stats.tool_clicks = stats.tool_clicks.slice(-500);
-      stats.last_updated = new Date().toISOString();
-      await saveCloudAnalytics(stats);
-      return res.status(200).json({ success: true });
+      return res.status(200).json({ success: true, total_visits: stats.total_visits });
     }
   }
 
