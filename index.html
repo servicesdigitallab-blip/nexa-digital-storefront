@@ -181,37 +181,47 @@
           }
         }
 
-        document.addEventListener('click', function(e) {
+                document.addEventListener('click', function(e) {
           var target = e.target ? e.target.closest('a, button') : null;
           if (!target) return;
-          var href = target.getAttribute('href') || '';
+          var href = (target.getAttribute('href') || '').toLowerCase();
           var text = (target.innerText || '').toLowerCase();
 
           var isWaClick = href.includes('wa.me') || href.includes('whatsapp.com') || 
-                          (text.includes('order') && text.includes('whatsapp'));
+                          text.includes('whatsapp') || text.includes('order');
           if (!isWaClick) return;
 
           var heading = document.querySelector('h1');
           var toolName = heading ? heading.innerText.trim() : '';
           var planEl = document.querySelector('[data-selected-plan]') || 
-                       document.querySelector('.ring-2.ring-primary');
-          var planName = planEl ? planEl.innerText.split('
-')[0].trim() : 'Standard';
+                       document.querySelector('.ring-2.ring-primary') ||
+                       document.querySelector('.border-primary');
+          var planName = planEl ? planEl.innerText.split('\n')[0].replace(/\s*\([^)]*\)/g, '').trim() : 'Standard';
 
           var toolId = '';
           if (window.location.pathname.startsWith('/product/')) {
             toolId = window.location.pathname.replace('/product/', '').split('/')[0].split('?')[0];
           }
 
-          fetch('/api/track/click', {
-            method: 'POST', headers: hdr,
-            body: JSON.stringify({
-              toolId: toolId,
-              toolName: toolName || 'Unknown',
-              planName: planName,
-              device: dev
-            })
-          }).catch(function(){});
+          var payload = JSON.stringify({
+            type: 'click',
+            toolId: toolId || 'general',
+            toolName: toolName || 'WhatsApp Click',
+            planName: planName,
+            device: dev
+          });
+
+          if (navigator.sendBeacon) {
+            var blob = new Blob([payload], { type: 'application/json' });
+            navigator.sendBeacon('/api/track/click', blob);
+          } else {
+            fetch('/api/track/click', {
+              method: 'POST',
+              headers: hdr,
+              body: payload,
+              keepalive: true
+            }).catch(function(){});
+          }
         }, true);
 
         var lastPath = window.location.pathname;
