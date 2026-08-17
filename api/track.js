@@ -8,9 +8,7 @@ const sbHeaders = {
 };
 
 const SETTINGS_ID = '066a4027-9df8-45ee-ac41-32f26f11a507';
-
-// Ephemeral memory cache for 45-second heartbeat
-let liveSessions = {}; // { sid: timestamp }
+let liveSessions = {};
 
 async function getCloudAnalytics() {
   try {
@@ -22,14 +20,7 @@ async function getCloudAnalytics() {
       }
     }
   } catch (e) {}
-  return {
-    total_visits: 1,
-    mobile_visits: 0,
-    desktop_visits: 1,
-    total_clicks: 0,
-    total_tool_views: 0,
-    tool_clicks: []
-  };
+  return { events: [], tool_clicks: [] };
 }
 
 async function saveCloudAnalytics(stats) {
@@ -53,7 +44,6 @@ module.exports = async (req, res) => {
   const rawUrl = (req.url || '').toLowerCase();
   const now = Date.now();
 
-  // Clean stale live sessions older than 45 seconds
   for (const [sid, ts] of Object.entries(liveSessions)) {
     if (now - ts > 45000) delete liveSessions[sid];
   }
@@ -68,17 +58,26 @@ module.exports = async (req, res) => {
     const sid = body.sessionId || headers['x-forwarded-for'] || headers['x-real-ip'] || ('sess_' + Math.random().toString(36).slice(2, 8));
     liveSessions[sid] = now;
 
-    // Detect action type from URL or body
     const isClick = rawUrl.includes('click') || body.type === 'click';
     const isView = rawUrl.includes('view') || body.type === 'view';
     const isHeartbeat = rawUrl.includes('heartbeat') || body.type === 'heartbeat';
     const isVisit = rawUrl.includes('visit') || body.type === 'visit' || (!isClick && !isView && !isHeartbeat);
 
-    // 1. WhatsApp / Order Click
+    if (isHeartbeat) {
+      return res.status(200).json({ success: true, live: Math.max(1, Object.keys(liveSessions).length) });
+    }
+
+    const stats = await getCloudAnalytics();
+    if (!Array.isArray(stats.events)) stats.events = [];
+    if (!Array.isArray(stats.tool_clicks)) stats.tool_clicks = [];
+
     if (isClick) {
-      const stats = await getCloudAnalytics();
-      stats.total_clicks = (stats.total_clicks || 0) + 1;
-      if (!Array.isArray(stats.tool_clicks)) stats.tool_clicks = [];
+      const evt = {
+        t: 'click',
+        ts: now,
+        d: body.device || 'desktop'
+      };
+      stats.events.push(evt);
       stats.tool_clicks.push({
         id: 'c_' + now,
         toolId: body.toolId || 'general',
@@ -88,38 +87,17 @@ module.exports = async (req, res) => {
         timestamp: now
       });
       if (stats.tool_clicks.length > 500) stats.tool_clicks = stats.tool_clicks.slice(-500);
-      stats.last_updated = new Date().toISOString();
-      await saveCloudAnalytics(stats);
-      return res.status(200).json({ success: true, total_clicks: stats.total_clicks });
+    } else if (isView) {
+      stats.events.push({ t: 'view', ts: now, d: body.device || 'desktop' });
+    } else if (isVisit) {
+      stats.events.push({ t: 'visit', ts: now, d: body.device || 'desktop' });
     }
 
-    // 2. View Tool
-    if (isView) {
-      const stats = await getCloudAnalytics();
-      stats.total_tool_views = (stats.total_tool_views || 0) + 1;
-      stats.last_updated = new Date().toISOString();
-      await saveCloudAnalytics(stats);
-      return res.status(200).json({ success: true, total_tool_views: stats.total_tool_views });
-    }
-
-    // 3. Heartbeat
-    if (isHeartbeat) {
-      return res.status(200).json({ success: true, live: Math.max(1, Object.keys(liveSessions).length) });
-    }
-
-    // 4. Visit
-    if (isVisit) {
-      const stats = await getCloudAnalytics();
-      stats.total_visits = (stats.total_visits || 0) + 1;
-      if (body.device === 'mobile') {
-        stats.mobile_visits = (stats.mobile_visits || 0) + 1;
-      } else {
-        stats.desktop_visits = (stats.desktop_visits || 0) + 1;
-      }
-      stats.last_updated = new Date().toISOString();
-      await saveCloudAnalytics(stats);
-      return res.status(200).json({ success: true, total_visits: stats.total_visits });
-    }
+    // Keep only last 2000 events to avoid bloat
+    if (stats.events.length > 2000) stats.events = stats.events.slice(-2000);
+    stats.last_updated = new Date().toISOString();
+    await saveCloudAnalytics(stats);
+    return res.status(200).json({ success: true });
   }
 
   // GET stats (for Admin Panel)
@@ -128,11 +106,7 @@ module.exports = async (req, res) => {
 
   res.status(200).json({
     live_visitors: liveCount,
-    total_visits: stats.total_visits || 1,
-    mobile_visits: stats.mobile_visits || 0,
-    desktop_visits: stats.desktop_visits || 1,
-    total_clicks: stats.total_clicks || 0,
-    total_tool_views: stats.total_tool_views || 0,
+    events: stats.events || [],
     tool_clicks: stats.tool_clicks || []
   });
 };
