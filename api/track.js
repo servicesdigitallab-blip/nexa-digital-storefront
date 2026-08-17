@@ -86,15 +86,15 @@ module.exports = async (req, res) => {
         device: body.device || 'desktop',
         timestamp: now
       });
-      if (stats.tool_clicks.length > 500) stats.tool_clicks = stats.tool_clicks.slice(-500);
+      if (stats.tool_clicks.length > 1000) stats.tool_clicks = stats.tool_clicks.slice(-1000);
     } else if (isView) {
       stats.events.push({ t: 'view', ts: now, d: body.device || 'desktop' });
     } else if (isVisit) {
       stats.events.push({ t: 'visit', ts: now, d: body.device || 'desktop' });
     }
 
-    // Keep only last 2000 events to avoid bloat
-    if (stats.events.length > 2000) stats.events = stats.events.slice(-2000);
+    // Keep up to 5000 events for rich multi-week historical filtering
+    if (stats.events.length > 5000) stats.events = stats.events.slice(-5000);
     stats.last_updated = new Date().toISOString();
     await saveCloudAnalytics(stats);
     return res.status(200).json({ success: true });
