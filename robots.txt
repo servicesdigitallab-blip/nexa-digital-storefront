@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Host
+Host: https://nexadigitaltools.com
+
+# Sitemaps
+Sitemap: https://nexadigitaltools.com/sitemap.xml
