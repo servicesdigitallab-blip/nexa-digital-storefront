@@ -53,6 +53,24 @@ module.exports = async (req, res) => {
         };
       });
 
+      // Sort tools deterministically by tools_order or sort_order
+      try {
+        const SETTINGS_ID = '066a4027-9df8-45ee-ac41-32f26f11a507';
+        const setRes = await fetch(`${supabaseUrl}/rest/v1/site_settings?id=eq.${SETTINGS_ID}&select=hero`, { headers: sbHdr });
+        if (setRes.ok) {
+          const rows = await setRes.json();
+          if (rows[0] && rows[0].hero && Array.isArray(rows[0].hero.tools_order) && rows[0].hero.tools_order.length > 0) {
+            const orderMap = {};
+            rows[0].hero.tools_order.forEach((id, idx) => { orderMap[id] = idx; });
+            fullProducts.sort((a, b) => {
+              const ordA = orderMap[a.id] !== undefined ? orderMap[a.id] : (a.sort_order !== null && a.sort_order !== undefined ? a.sort_order : 9999);
+              const ordB = orderMap[b.id] !== undefined ? orderMap[b.id] : (b.sort_order !== null && b.sort_order !== undefined ? b.sort_order : 9999);
+              return ordA - ordB;
+            });
+          }
+        }
+      } catch(e) {}
+
       if (fullProducts.length > 0) {
         return res.status(200).json(fullProducts);
       }
