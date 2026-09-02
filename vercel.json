@@ -121,6 +121,10 @@
       "destination": "/api/store-coupons.js"
     },
     {
+      "source": "/api/store/blog",
+      "destination": "/api/store-blog.js"
+    },
+    {
       "source": "/api/track/:match*",
       "destination": "/api/track.js"
     },
