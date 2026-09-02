@@ -90,6 +90,19 @@
       ]
     }
   ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.nexadigitaltools.com"
+        }
+      ],
+      "destination": "https://nexadigitaltools.com/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/store/tools",
