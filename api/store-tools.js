@@ -3,28 +3,35 @@ const path = require('path');
 
 const supabaseUrl = process.env.SUPABASE_URL || 'https://ydbkvjgotjsjjfvruoei.supabase.co';
 const supabaseKey = process.env.SUPABASE_ANON_KEY || 'sb_publishable_5jsN-ZSP1YLw4Tu_mBg2Jw_5hv0HgOv';
+const SETTINGS_ID = '066a4027-9df8-45ee-ac41-32f26f11a507';
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  // Absolute zero caching on API so all devices see updates instantly
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0');
+  res.setHeader('CDN-Cache-Control', 'no-store');
+  res.setHeader('Vercel-CDN-Cache-Control', 'no-store');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  // 1. Try Supabase Live Tables
+  // 1. Try Supabase Live Tables in Ultra-Fast Parallel Queries
   try {
     const sbHdr = {
       'apikey': supabaseKey,
       'Authorization': `Bearer ${supabaseKey}`
     };
 
-    const [prodRes, plansRes, featsRes, faqsRes, catRes] = await Promise.all([
+    const [prodRes, plansRes, featsRes, faqsRes, catRes, setRes] = await Promise.all([
       fetch(`${supabaseUrl}/rest/v1/products?select=*&order=sort_order.asc,created_at.desc`, { headers: sbHdr }).catch(() => null),
       fetch(`${supabaseUrl}/rest/v1/product_plans?select=*`, { headers: sbHdr }).catch(() => null),
       fetch(`${supabaseUrl}/rest/v1/product_features?select=*&order=sort_order.asc`, { headers: sbHdr }).catch(() => null),
       fetch(`${supabaseUrl}/rest/v1/product_faqs?select=*&order=sort_order.asc`, { headers: sbHdr }).catch(() => null),
-      fetch(`${supabaseUrl}/rest/v1/categories?select=*`, { headers: sbHdr }).catch(() => null)
+      fetch(`${supabaseUrl}/rest/v1/categories?select=*`, { headers: sbHdr }).catch(() => null),
+      fetch(`${supabaseUrl}/rest/v1/site_settings?id=eq.${SETTINGS_ID}&select=hero`, { headers: sbHdr }).catch(() => null)
     ]);
 
     if (prodRes && prodRes.ok) {
@@ -43,9 +50,17 @@ module.exports = async (req, res) => {
         const pFaqs = faqs.filter(fq => fq.product_id === p.id).sort((a, b) => a.sort_order - b.sort_order);
         const slug = p.slug || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : p.id);
 
+        let image = p.image;
+        if (!image) {
+          image = '/placeholder.svg';
+        } else if (image.includes('na.imgto.link') || image.includes('download.avif') || (p.name && p.name.toLowerCase().includes('gemini 18'))) {
+          image = '/product-images/gemini-18.png';
+        }
+
         return {
           ...p,
           slug,
+          image,
           category_name: catMap[p.category_id] || p.category_name || "AI Tools",
           plans: pPlans,
           features: pFeats,
@@ -53,11 +68,9 @@ module.exports = async (req, res) => {
         };
       });
 
-      // Sort tools deterministically by tools_order or sort_order
+      // Apply Custom Hero Tools Order from site_settings immediately
       try {
-        const SETTINGS_ID = '066a4027-9df8-45ee-ac41-32f26f11a507';
-        const setRes = await fetch(`${supabaseUrl}/rest/v1/site_settings?id=eq.${SETTINGS_ID}&select=hero`, { headers: sbHdr });
-        if (setRes.ok) {
+        if (setRes && setRes.ok) {
           const rows = await setRes.json();
           if (rows[0] && rows[0].hero && Array.isArray(rows[0].hero.tools_order) && rows[0].hero.tools_order.length > 0) {
             const orderMap = {};

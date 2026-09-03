@@ -69,6 +69,15 @@
     <link rel="modulepreload" href="/assets/Contact-Bco5b7Kj.js" />
     <link rel="modulepreload" href="/assets/Blog-C4u5uInp.js" />
     <link rel="modulepreload" href="/assets/BlogPost-C2XMi89J.js" />
+    <!-- Instant Hero Product Image Preloads (0ms load on any device) -->
+    <link rel="preload" as="image" href="/product-images/c9cfe01e69991fec7f9caa41aa58de96.png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/product-images/capcut-pro.jpg" fetchpriority="high" />
+    <link rel="preload" as="image" href="/product-images/8fcca94530b032adbd5de4bf7bddfe3d.png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/product-images/6e6d4429f7f03e8d24cf68dfa656a656.jpg" fetchpriority="high" />
+    <link rel="preload" as="image" href="/product-images/60a8bcf367ad52c9ca3c19a1d37fc9b2.png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/product-images/f91a9a8f381197cfb6415d346b3f9229.png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/product-images/81bb2feb52bd315eb1676cf67d8a2320.png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/product-images/gemini-18.png" fetchpriority="high" />
     <link rel="preload" href="/assets/index-g2WHYVtL.css" as="style" />
 
     <!-- Fonts: Poppins -->
@@ -156,7 +165,7 @@
       document.documentElement.style.colorScheme = 'dark';
     </script>
     
-    <!-- Instant Fast Pre-cache for 0ms Navigation -->
+    <!-- Instant Fast Pre-cache & Immediate Live Sync -->
     <script>
       (function() {
         try {
@@ -166,12 +175,17 @@
           }
         } catch(e) {}
         
-        fetch('/api/store/tools?_=' + Date.now(), { cache: 'no-store' })
+        // High priority live fetch from edge API (0ms cache)
+        fetch('/api/store/tools?_=' + Date.now(), { cache: 'no-store', priority: 'high' })
           .then(function(r) { return r.ok ? r.json() : null; })
           .then(function(tools) {
             if (Array.isArray(tools) && tools.length > 0) {
               window.__nexa_tools_cache = tools;
-              try { localStorage.setItem('nexa_tools_cache_v2', JSON.stringify(tools)); } catch(e) {}
+              try {
+                localStorage.setItem('nexa_tools_cache_v2', JSON.stringify(tools));
+                localStorage.setItem('nexa_tools_updated', Date.now().toString());
+              } catch(e) {}
+              window.dispatchEvent(new CustomEvent('nexa:tools_updated', { detail: tools }));
             }
           })
           .catch(function() {});
@@ -1408,13 +1422,83 @@
               <div>
                 <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
                 <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
+                  <a href="/product/gemini-18-month" style="color: #ffffff; text-decoration: none;">Gemini 18 month Low Price in PK</a>
+                </h3>
+                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">100% Genuine Official License, Instant Delivery on WhatsApp</p>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
+                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 999</span>
+                <a href="/product/gemini-18-month" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
+              </div>
+            </article>
+
+            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
+                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
+                  <a href="/product/netflix" style="color: #ffffff; text-decoration: none;">Netflix Low Price in PK</a>
+                </h3>
+                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">100% Secure, Vast library of movies and TV shows</p>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
+                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
+                <a href="/product/netflix" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
+              </div>
+            </article>
+
+            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
+                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
+                  <a href="/product/cursor-ai" style="color: #ffffff; text-decoration: none;">Cursor AI Low Price in PK</a>
+                </h3>
+                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">AI-powered code writing & smart autocomplete, AI-powered code generation</p>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
+                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 3,000</span>
+                <a href="/product/cursor-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
+              </div>
+            </article>
+
+            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
+                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
+                  <a href="/product/claude-ai" style="color: #ffffff; text-decoration: none;">Claude AI Low Price in PK</a>
+                </h3>
+                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Provides thoughtful, human-like responses for a wide range of tasks, Supports writing assistance, research summaries, and content planning</p>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
+                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,500</span>
+                <a href="/product/claude-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
+              </div>
+            </article>
+
+            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
+                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
                   <a href="/product/chatgpt" style="color: #ffffff; text-decoration: none;">ChatGPT Low Price in PK</a>
                 </h3>
                 <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">GPT-4o & o1 Reasoning Models Unlocked, Advanced Voice Mode & Vision</p>
               </div>
               <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,300</span>
+                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,000</span>
                 <a href="/product/chatgpt" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
+              </div>
+            </article>
+
+            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
+                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
+                  <a href="/product/grok-ai" style="color: #ffffff; text-decoration: none;">Grok Ai Low Price in PK</a>
+                </h3>
+                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Real-time AI answers, Real-time AI answers</p>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
+                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,500</span>
+                <a href="/product/grok-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
               </div>
             </article>
 
@@ -1450,20 +1534,6 @@
               <div>
                 <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
                 <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/grok-ai" style="color: #ffffff; text-decoration: none;">Grok Ai Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Real-time AI answers, Real-time AI answers</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,900</span>
-                <a href="/product/grok-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
                   <a href="/product/leonardo-ai" style="color: #ffffff; text-decoration: none;">Leonardo AI Low Price in PK</a>
                 </h3>
                 <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">AI-powered image generation, Generate detailed AI-powered visuals directly from text prompts</p>
@@ -1492,20 +1562,6 @@
               <div>
                 <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
                 <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/claude-ai" style="color: #ffffff; text-decoration: none;">Claude AI Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Provides thoughtful, human-like responses for a wide range of tasks, Supports writing assistance, research summaries, and content planning</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 5,500</span>
-                <a href="/product/claude-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
                   <a href="/product/heygen-ai" style="color: #ffffff; text-decoration: none;">HeyGen AI Low Price in PK</a>
                 </h3>
                 <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Create videos using realistic AI avatars, Realistic AI avatars and voices</p>
@@ -1527,20 +1583,6 @@
               <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
                 <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,600</span>
                 <a href="/product/ideogram-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/cursor-ai" style="color: #ffffff; text-decoration: none;">Cursor AI Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">AI-powered code writing & smart autocomplete, AI-powered code generation</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 4,500</span>
-                <a href="/product/cursor-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
               </div>
             </article>
 
@@ -2227,20 +2269,6 @@
               <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
                 <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
                 <a href="/product/chaupal" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/netflix" style="color: #ffffff; text-decoration: none;">Netflix Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">100% Secure, Vast library of movies and TV shows</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
-                <a href="/product/netflix" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
               </div>
             </article>
 
