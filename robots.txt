@@ -2,8 +2,41 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
+# Explicit Whitelist & Direct Access for AI Search & Answer Engines (AEO / GEO)
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
 # Host
 Host: https://nexadigitaltools.com
 
-# Sitemaps
+# Sitemaps & Knowledge Feeds
 Sitemap: https://nexadigitaltools.com/sitemap.xml
+
+# LLM Context Feeds (AEO / GEO standard)
+Allow: /llms.txt
+Allow: /llms-full.txt
+
