@@ -276,25 +276,12 @@
     <!-- Instant Fast Edge Pre-cache & Immediate Live Sync -->
     <script>
       (function() {
-        try {
-          var cached = localStorage.getItem('nexa_tools_cache_v2');
-          var cachedTime = localStorage.getItem('nexa_tools_updated');
-          // Only use client cache if fresh (< 90 seconds)
-          if (cached && cachedTime && (Date.now() - parseInt(cachedTime, 10) < 90000)) {
-            window.__nexa_tools_cache = JSON.parse(cached);
-          }
-        } catch(e) {}
-        
         // High priority live fetch from Edge API (10ms response)
         fetch('/api/store/tools', { priority: 'high' })
           .then(function(r) { return r.ok ? r.json() : null; })
           .then(function(tools) {
             if (Array.isArray(tools) && tools.length > 0) {
               window.__nexa_tools_cache = tools;
-              try {
-                localStorage.setItem('nexa_tools_cache_v2', JSON.stringify(tools));
-                localStorage.setItem('nexa_tools_updated', Date.now().toString());
-              } catch(e) {}
               window.dispatchEvent(new CustomEvent('nexa:tools_updated', { detail: tools }));
             }
           })
@@ -1389,1312 +1376,159 @@
   </head>
   <body>
     <div id="root">
-      <!-- SEO Crawler Index: 100% Accessible to Search Engines without UI Flash for Human Users -->
-      <header style="padding: 20px; border-bottom: 1px solid #27272a; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-        <div style="font-size: 24px; font-weight: bold; color: #ffffff;">
-          <a href="/" style="color: #f59e0b; text-decoration: none;">Nexa Digital</a>
-        </div>
-        <nav style="display: flex; gap: 20px;">
-          <a href="/" style="color: #d4d4d8; text-decoration: none;">Home</a>
-          <a href="/tools" style="color: #d4d4d8; text-decoration: none;">All Tools</a>
-          <a href="/blog" style="color: #f59e0b; font-weight: bold; text-decoration: none;">Guides & Blog</a>
-          <a href="/freebies" style="color: #d4d4d8; text-decoration: none;">Editing Packs</a>
-          <a href="/why-us" style="color: #d4d4d8; text-decoration: none;">Why Choose Us</a>
-          <a href="/about" style="color: #d4d4d8; text-decoration: none;">About</a>
-          <a href="/contact" style="color: #d4d4d8; text-decoration: none;">Contact Support</a>
+    <div style="background:#09090b; color:#f4f4f5; min-height:100vh; font-family:'Poppins', sans-serif;">
+      <!-- Navigation -->
+      <header style="border-bottom:1px solid #27272a; padding:18px 24px; max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+        <a href="/" style="font-size:22px; font-weight:800; color:#f59e0b; text-decoration:none;">Nexa Digital</a>
+        <nav style="display:flex; gap:18px; font-size:14px;">
+          <a href="/" style="color:#d4d4d8; text-decoration:none;">Home</a>
+          <a href="/tools" style="color:#f59e0b; font-weight:600; text-decoration:none;">All Tools</a>
+          <a href="/blog" style="color:#d4d4d8; text-decoration:none;">Guides</a>
+          <a href="/freebies" style="color:#d4d4d8; text-decoration:none;">Freebies</a>
+          <a href="/contact" style="color:#d4d4d8; text-decoration:none;">Support</a>
         </nav>
       </header>
 
-      <main style="max-width: 1200px; margin: 40px auto; padding: 0 20px; color: #f4f4f5; font-family: sans-serif;">
-        <section style="text-align: center; margin-bottom: 50px;">
-          <h1 style="font-size: 38px; font-weight: 800; color: #ffffff; margin-bottom: 15px; line-height: 1.2;">
-            NEXA | Nexa Digital (Nexa Digital Tools) — Pakistan's #1 Digital Subscriptions Store
-          </h1>
-          <p style="font-size: 18px; color: #a1a1aa; max-width: 850px; margin: 0 auto 25px; line-height: 1.6;">
-            Welcome to <strong>Nexa Digital</strong> (commonly known as <strong>NEXA</strong>, <strong>Nexa</strong>, <strong>nex</strong>, <strong>NEX</strong>, <strong>NEXA DIGITAL</strong>, <strong>nexa digital tools</strong>, or <strong>NexaTools</strong> at <strong>nexadigitaltools.com</strong>). We are Pakistan's top-rated and verified provider for <strong>ChatGPT Plus low price (PKR 2,300)</strong>, <strong>cheap Canva Pro (PKR 1,000)</strong>, <strong>Gemini Advanced (PKR 999)</strong>, <strong>CapCut Pro PC & Mobile</strong>, <strong>Claude 3.5 Sonnet</strong>, and <strong>70+ premium AI, SEO & design subscriptions</strong> with instant 2-5 minute WhatsApp delivery and EasyPaisa / JazzCash / Bank Transfer payment.
-          </p>
-          <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-            <a href="/tools" style="background-color: #f59e0b; color: #09090b; padding: 12px 28px; border-radius: 12px; font-weight: bold; text-decoration: none;">Browse 70+ Tools</a>
-            <a href="/blog" style="background-color: #18181b; color: #f59e0b; border: 1px solid #f59e0b; padding: 12px 28px; border-radius: 12px; font-weight: 600; text-decoration: none;">Read Buying Guides</a>
-            <a href="/contact" style="background-color: #27272a; color: #ffffff; padding: 12px 28px; border-radius: 12px; font-weight: 600; text-decoration: none;">WhatsApp Support</a>
+      <!-- Breadcrumbs -->
+      <div style="max-width:1200px; margin:20px auto 0; padding:0 20px; font-size:13px; color:#71717a;">
+        <a href="/" style="color:#a1a1aa; text-decoration:none;">Home</a> &gt; 
+        <a href="/tools" style="color:#a1a1aa; text-decoration:none;">Tools</a> &gt; 
+        <span style="color:#f59e0b;">4 GB RDP (4 Cores)</span>
+      </div>
+
+      <!-- Main Product Display -->
+      <main style="max-width:1200px; margin:30px auto; padding:0 20px;">
+        <article style="background:#18181b; border:1px solid #27272a; border-radius:24px; padding:35px; display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:40px;">
+          <!-- Product Image -->
+          <div style="text-align:center;">
+            <img src="https://nexadigitaltools.com/product-images/497b79d030fd6ddfbe320e29ebeed459.jpg" alt="4 GB RDP (4 Cores) Subscription in Pakistan" style="max-width:100%; max-height:360px; object-fit:contain; border-radius:18px; background:#121215; padding:20px; border:1px solid #27272a;" />
+            <div style="margin-top:15px; display:inline-block; background:rgba(16, 185, 129, 0.15); color:#10b981; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700;">
+              ✓ 100% In Stock &amp; Verified
+            </div>
+          </div>
+
+          <!-- Product Details -->
+          <div>
+            <span style="background:rgba(245, 158, 11, 0.15); color:#f59e0b; font-size:12px; font-weight:700; padding:4px 10px; border-radius:8px; text-transform:uppercase;">
+              RDS/VPS
+            </span>
+            <h1 style="font-size:32px; font-weight:800; color:#ffffff; margin:15px 0 10px;">
+              4 GB RDP (4 Cores) Subscription in Pakistan
+            </h1>
+            <p style="color:#a1a1aa; font-size:15px; line-height:1.6; margin-bottom:20px;">
+              The 4 GB RDP Server offers improved performance for multitasking, automation software, trading platforms, and development work. With fast NVMe storage and powerful CPU cores, it provides stable and reliable remote desktop performance.
+            </p>
+
+            <!-- Price Box -->
+            <div style="background:#121215; border:1px solid #27272a; border-radius:16px; padding:20px; margin-bottom:25px;">
+              <div style="display:flex; align-items:baseline; gap:12px;">
+                <span style="font-size:32px; font-weight:900; color:#10b981;">PKR 2,200</span>
+                <span style="font-size:18px; color:#71717a; text-decoration:line-through;">PKR 6,600</span>
+              </div>
+              <p style="font-size:13px; color:#f59e0b; margin-top:6px; font-weight:600;">
+                ⚡ Lowest price guaranteed in Pakistan | Pay via EasyPaisa / JazzCash
+              </p>
+            </div>
+
+            <!-- Features -->
+            
+              <div style="margin-bottom:25px;">
+                <h3 style="font-size:16px; font-weight:700; color:#ffffff; margin-bottom:10px;">Key Features:</h3>
+                <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;">
+                  <li style="font-size:14px; color:#d4d4d8;">✓ 4 vCPU Cores</li><li style="font-size:14px; color:#d4d4d8;">✓ 4 GB RAM</li><li style="font-size:14px; color:#d4d4d8;">✓ Fast NVMe SSD storage</li><li style="font-size:14px; color:#d4d4d8;">✓ Enhanced multitasking capabilities</li><li style="font-size:14px; color:#d4d4d8;">✓ 32 TB Monthly Traffic</li><li style="font-size:14px; color:#d4d4d8;">✓ Ideal for automation software</li><li style="font-size:14px; color:#d4d4d8;">✓ 110 GB NVMe Storage</li><li style="font-size:14px; color:#d4d4d8;">✓ Unlimited Incoming Bandwidth</li><li style="font-size:14px; color:#d4d4d8;">✓ Stable trading platform support</li><li style="font-size:14px; color:#d4d4d8;">✓ Reliable for development work</li><li style="font-size:14px; color:#d4d4d8;">✓ All Countries Available</li><li style="font-size:14px; color:#d4d4d8;">✓ High-performance remote desktop</li><li style="font-size:14px; color:#d4d4d8;">✓ Secure and private connection</li>
+                </ul>
+              </div>
+            
+
+            <!-- CTA -->
+            <div style="display:flex; gap:15px; flex-wrap:wrap;">
+              <a href="https://wa.me/message/YOUR_WHATSAPP?text=Hi%20Nexa%20Digital%2C%20I%20want%20to%20buy%204%20GB%20RDP%20(4%20Cores)" style="background:#25D366; color:#ffffff; font-weight:700; font-size:16px; padding:14px 28px; border-radius:12px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
+                Order on WhatsApp (Instant 2-Min) →
+              </a>
+              <a href="/tools" style="background:#27272a; color:#ffffff; font-weight:600; font-size:15px; padding:14px 24px; border-radius:12px; text-decoration:none;">
+                Browse Other Tools
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Guarantee Section -->
+        <section style="margin-top:40px; background:#18181b; border:1px solid #27272a; border-radius:20px; padding:25px; display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:20px; text-align:center;">
+          <div>
+            <div style="font-size:24px; margin-bottom:6px;">⚡</div>
+            <h4 style="font-size:15px; font-weight:700; color:#ffffff; margin-bottom:4px;">Instant Delivery</h4>
+            <p style="font-size:12px; color:#a1a1aa;">Credentials sent directly to your WhatsApp in 2-5 minutes.</p>
+          </div>
+          <div>
+            <div style="font-size:24px; margin-bottom:6px;">🛡️</div>
+            <h4 style="font-size:15px; font-weight:700; color:#ffffff; margin-bottom:4px;">Full Warranty</h4>
+            <p style="font-size:12px; color:#a1a1aa;">100% replacement warranty throughout your active plan.</p>
+          </div>
+          <div>
+            <div style="font-size:24px; margin-bottom:6px;">💳</div>
+            <h4 style="font-size:15px; font-weight:700; color:#ffffff; margin-bottom:4px;">Local Payments</h4>
+            <p style="font-size:12px; color:#a1a1aa;">EasyPaisa, JazzCash, SadaPay, NayaPay &amp; Bank Transfer.</p>
+          </div>
+          <div>
+            <div style="font-size:24px; margin-bottom:6px;">💬</div>
+            <h4 style="font-size:15px; font-weight:700; color:#ffffff; margin-bottom:4px;">24/7 VIP Support</h4>
+            <p style="font-size:12px; color:#a1a1aa;">Always active to help resolve queries instantly.</p>
           </div>
         </section>
 
-        <!-- AEO & GEO Entity Profile for Google AI Overviews, Perplexity & ChatGPT Search -->
-        <section style="margin-bottom: 50px; background: #121215; border: 1px solid #27272a; border-radius: 20px; padding: 25px;">
-          <h2 style="font-size: 22px; font-weight: 700; color: #f59e0b; margin-bottom: 12px;">
-            About NEXA / Nexa Digital (Official Entity Summary)
-          </h2>
-          <p style="color: #d4d4d8; font-size: 15px; line-height: 1.7; margin-bottom: 15px;">
-            <strong>Nexa Digital</strong> (also known in search queries as <strong>NEXA</strong>, <strong>Nexa</strong>, <strong>nex</strong>, <strong>nexa digital</strong>, <strong>NEXA DIGITAL</strong>, or <strong>Nexa Digital Tools</strong>) is the #1 authoritative digital software subscription marketplace in Pakistan. It was established to solve international credit card payment barriers for Pakistani creators, software engineers, students, and freelancers by enabling frictionless payments via <strong>EasyPaisa</strong>, <strong>JazzCash</strong>, <strong>SadaPay</strong>, <strong>NayaPay</strong>, and local <strong>Bank Transfers</strong>. All software licenses and private accounts are verified, genuine, and delivered within 2 to 5 minutes via WhatsApp.
-          </p>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; font-size: 13px; color: #a1a1aa;">
-            <div><strong style="color:#ffffff;">Official Brand:</strong> Nexa Digital (NEXA)</div>
-            <div><strong style="color:#ffffff;">Official URL:</strong> https://nexadigitaltools.com/</div>
-            <div><strong style="color:#ffffff;">Product Catalog:</strong> 70+ AI, SEO, & Design Tools</div>
-            <div><strong style="color:#ffffff;">Delivery Time:</strong> 2 to 5 minutes via WhatsApp</div>
-            <div><strong style="color:#ffffff;">Local Payments:</strong> EasyPaisa, JazzCash, Raast, Bank Transfer</div>
-            <div><strong style="color:#ffffff;">Customer Guarantee:</strong> 100% Replacement Warranty</div>
-          </div>
-        </section>
-
-        <!-- Pakistan Low Price Comparison Table -->
-        <section style="margin-bottom: 60px; background: #18181b; border: 1px solid #27272a; border-radius: 20px; padding: 25px; overflow-x: auto;">
-          <h2 style="font-size: 26px; font-weight: 700; color: #f59e0b; margin-bottom: 10px;">
-            🔥 2026 Low Price Digital Tools in Pakistan (Price List)
-          </h2>
-          <p style="color: #a1a1aa; font-size: 14px; margin-bottom: 20px;">Compare our cheap Pakistani Rupee (PKR) prices with official international USD dollar rates.</p>
-          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
-            <thead>
-              <tr style="border-bottom: 2px solid #27272a; color: #a1a1aa;">
-                <th style="padding: 12px 8px;">Tool / Subscription</th>
-                <th style="padding: 12px 8px;">Low Price in PK</th>
-                <th style="padding: 12px 8px;">Official USD Price</th>
-                <th style="padding: 12px 8px;">Delivery</th>
-                <th style="padding: 12px 8px;">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="border-bottom: 1px solid #27272a;">
-                <td style="padding: 12px 8px; font-weight: 600; color: #ffffff;">ChatGPT Plus (GPT-4o & o1)</td>
-                <td style="padding: 12px 8px; color: #10b981; font-weight: 800;">PKR 2,300 / mo</td>
-                <td style="padding: 12px 8px; color: #ef4444;">$20 (~PKR 5,700)</td>
-                <td style="padding: 12px 8px; color: #a1a1aa;">Instant WhatsApp</td>
-                <td style="padding: 12px 8px;"><a href="/product/chatgpt" style="color: #f59e0b; font-weight: bold; text-decoration: none;">Buy Low Price →</a></td>
-              </tr>
-              <tr style="border-bottom: 1px solid #27272a;">
-                <td style="padding: 12px 8px; font-weight: 600; color: #ffffff;">Canva Pro Private Account</td>
-                <td style="padding: 12px 8px; color: #10b981; font-weight: 800;">PKR 1,000 / mo</td>
-                <td style="padding: 12px 8px; color: #ef4444;">$13 (~PKR 3,600)</td>
-                <td style="padding: 12px 8px; color: #a1a1aa;">Instant WhatsApp</td>
-                <td style="padding: 12px 8px;"><a href="/product/canva-pro" style="color: #f59e0b; font-weight: bold; text-decoration: none;">Buy Low Price →</a></td>
-              </tr>
-              <tr style="border-bottom: 1px solid #27272a;">
-                <td style="padding: 12px 8px; font-weight: 600; color: #ffffff;">CapCut Pro PC & Mobile</td>
-                <td style="padding: 12px 8px; color: #10b981; font-weight: 800;">PKR 1,000 / mo</td>
-                <td style="padding: 12px 8px; color: #ef4444;">$10 (~PKR 2,800)</td>
-                <td style="padding: 12px 8px; color: #a1a1aa;">Instant WhatsApp</td>
-                <td style="padding: 12px 8px;"><a href="/product/capcut-pro" style="color: #f59e0b; font-weight: bold; text-decoration: none;">Buy Low Price →</a></td>
-              </tr>
-              <tr style="border-bottom: 1px solid #27272a;">
-                <td style="padding: 12px 8px; font-weight: 600; color: #ffffff;">Claude AI Pro (3.5 Sonnet)</td>
-                <td style="padding: 12px 8px; color: #10b981; font-weight: 800;">PKR 5,500 / mo</td>
-                <td style="padding: 12px 8px; color: #ef4444;">$20 (~PKR 5,700)</td>
-                <td style="padding: 12px 8px; color: #a1a1aa;">Instant WhatsApp</td>
-                <td style="padding: 12px 8px;"><a href="/product/claude-ai" style="color: #f59e0b; font-weight: bold; text-decoration: none;">Buy Low Price →</a></td>
-              </tr>
-              <tr style="border-bottom: 1px solid #27272a;">
-                <td style="padding: 12px 8px; font-weight: 600; color: #ffffff;">VidIQ Boost (YouTube SEO)</td>
-                <td style="padding: 12px 8px; color: #10b981; font-weight: 800;">PKR 650 / mo</td>
-                <td style="padding: 12px 8px; color: #ef4444;">$49 (~PKR 13,800)</td>
-                <td style="padding: 12px 8px; color: #a1a1aa;">Instant WhatsApp</td>
-                <td style="padding: 12px 8px;"><a href="/product/vidiq" style="color: #f59e0b; font-weight: bold; text-decoration: none;">Buy Low Price →</a></td>
-              </tr>
-              <tr style="border-bottom: 1px solid #27272a;">
-                <td style="padding: 12px 8px; font-weight: 600; color: #ffffff;">ElevenLabs Creator Plan</td>
-                <td style="padding: 12px 8px; color: #10b981; font-weight: 800;">PKR 2,300 / mo</td>
-                <td style="padding: 12px 8px; color: #ef4444;">$22 (~PKR 6,200)</td>
-                <td style="padding: 12px 8px; color: #a1a1aa;">Instant WhatsApp</td>
-                <td style="padding: 12px 8px;"><a href="/product/elevenlabs-creator-plan" style="color: #f59e0b; font-weight: bold; text-decoration: none;">Buy Low Price →</a></td>
-              </tr>
-              <tr style="border-bottom: 1px solid #27272a;">
-                <td style="padding: 12px 8px; font-weight: 600; color: #ffffff;">Leonardo AI (Artisan Plan)</td>
-                <td style="padding: 12px 8px; color: #10b981; font-weight: 800;">PKR 1,700 / mo</td>
-                <td style="padding: 12px 8px; color: #ef4444;">$12 (~PKR 3,400)</td>
-                <td style="padding: 12px 8px; color: #a1a1aa;">Instant WhatsApp</td>
-                <td style="padding: 12px 8px;"><a href="/product/leonardo-ai" style="color: #f59e0b; font-weight: bold; text-decoration: none;">Buy Low Price →</a></td>
-              </tr>
-              <tr style="border-bottom: 1px solid #27272a;">
-                <td style="padding: 12px 8px; font-weight: 600; color: #ffffff;">Cursor AI Pro (Developer IDE)</td>
-                <td style="padding: 12px 8px; color: #10b981; font-weight: 800;">PKR 4,500 / mo</td>
-                <td style="padding: 12px 8px; color: #ef4444;">$20 (~PKR 5,700)</td>
-                <td style="padding: 12px 8px; color: #a1a1aa;">Instant WhatsApp</td>
-                <td style="padding: 12px 8px;"><a href="/product/cursor-ai" style="color: #f59e0b; font-weight: bold; text-decoration: none;">Buy Low Price →</a></td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-
-        <!-- Blog Section for Top SEO Ranking -->
-        <section style="margin-bottom: 60px;">
-          <h2 style="font-size: 28px; font-weight: 700; color: #f59e0b; margin-bottom: 10px;">
-            Latest Pakistan Buying Guides & Tutorials
-          </h2>
-          <p style="color: #a1a1aa; font-size: 14px; margin-bottom: 25px;">Learn how to buy, compare prices, and use premium tools with local payment methods.</p>
-          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Guides</span>
-                <h3 style="font-size: 18px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/blog/lowest-price-chatgpt-gemini-pro-ai-tools-pakistan" style="color: #ffffff; text-decoration: none;">Lowest Price of ChatGPT Plus, Gemini Pro & Top AI Tools in Pakistan (2026 Price List)</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Complete 2026 price comparison guide for ChatGPT Plus, Google Gemini Pro / Advanced, Canva Pro, and CapCut in Pakistan. Buy at the lowest PKR price with EasyPaisa & JazzCash.</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px; font-size: 12px; color: #71717a;">
-                <span>6 min read</span>
-                <a href="/blog/lowest-price-chatgpt-gemini-pro-ai-tools-pakistan" style="color: #f59e0b; text-decoration: none; font-weight: 600;">Read Full Guide →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Guides</span>
-                <h3 style="font-size: 18px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/blog/how-to-buy-chatgpt-plus-in-pakistan" style="color: #ffffff; text-decoration: none;">How to Buy ChatGPT Plus in Pakistan with EasyPaisa & JazzCash (2026 Guide)</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Complete step-by-step guide on how to buy genuine ChatGPT Plus (GPT-4o & o1 reasoning models) in Pakistan using EasyPaisa, JazzCash, or Bank Transfer with instant WhatsApp delivery.</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px; font-size: 12px; color: #71717a;">
-                <span>5 min read</span>
-                <a href="/blog/how-to-buy-chatgpt-plus-in-pakistan" style="color: #f59e0b; text-decoration: none; font-weight: 600;">Read Full Guide →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Design & Creative</span>
-                <h3 style="font-size: 18px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/blog/canva-pro-vs-free-pricing-pakistan-guide" style="color: #ffffff; text-decoration: none;">Canva Pro vs Free: Complete Pricing & Features Guide in Pakistan (2026)</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Discover all Canva Pro premium features: 1-click background remover, brand kits, 100M+ premium assets, and how to get an affordable Canva Pro subscription in Pakistan.</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px; font-size: 12px; color: #71717a;">
-                <span>6 min read</span>
-                <a href="/blog/canva-pro-vs-free-pricing-pakistan-guide" style="color: #f59e0b; text-decoration: none; font-weight: 600;">Read Full Guide →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Video Editing</span>
-                <h3 style="font-size: 18px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/blog/capcut-pro-features-pricing-cheap-subscription-pakistan" style="color: #ffffff; text-decoration: none;">CapCut Pro for PC & Mobile: Features, Pricing & Cheap Subscription in Pakistan</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Everything video creators need to know about CapCut Pro: auto-captions, AI video effects, 4K 60FPS export, and how to get an affordable CapCut Pro subscription in Pakistan.</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px; font-size: 12px; color: #71717a;">
-                <span>5 min read</span>
-                <a href="/blog/capcut-pro-features-pricing-cheap-subscription-pakistan" style="color: #f59e0b; text-decoration: none; font-weight: 600;">Read Full Guide →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Guides</span>
-                <h3 style="font-size: 18px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/blog/claude-3-5-sonnet-claude-pro-guide-pakistan" style="color: #ffffff; text-decoration: none;">Claude 3.5 Sonnet & Claude Pro: Features, Coding Benchmarks & Buy in Pakistan</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Why top software engineers and writers prefer Claude 3.5 Sonnet over GPT-4. Coding benchmarks, interactive Artifacts, and how to buy Claude Pro in Pakistan.</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px; font-size: 12px; color: #71717a;">
-                <span>6 min read</span>
-                <a href="/blog/claude-3-5-sonnet-claude-pro-guide-pakistan" style="color: #f59e0b; text-decoration: none; font-weight: 600;">Read Full Guide →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">SEO & Marketing</span>
-                <h3 style="font-size: 18px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/blog/best-seo-tools-group-buy-subscriptions-pakistan" style="color: #ffffff; text-decoration: none;">Best Affordable SEO Tools & Group Buy Subscriptions in Pakistan (2026)</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Top SEO tools every digital marketer needs: SEMrush, Ahrefs, Moz Pro, VidIQ, and how to access them at 90% cheaper prices with 100% uptime.</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px; font-size: 12px; color: #71717a;">
-                <span>7 min read</span>
-                <a href="/blog/best-seo-tools-group-buy-subscriptions-pakistan" style="color: #f59e0b; text-decoration: none; font-weight: 600;">Read Full Guide →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 18px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/blog/top-10-essential-ai-tools-freelancers-creators-2026" style="color: #ffffff; text-decoration: none;">Top 10 Essential AI Tools Every Freelancer & Creator Needs in 2026</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Boost your freelance earnings with the top 10 AI tools of 2026: Midjourney, Leonardo AI, ElevenLabs, HeyGen, Cursor AI, and ChatGPT.</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px; font-size: 12px; color: #71717a;">
-                <span>8 min read</span>
-                <a href="/blog/top-10-essential-ai-tools-freelancers-creators-2026" style="color: #f59e0b; text-decoration: none; font-weight: 600;">Read Full Guide →</a>
-              </div>
-            </article>
-
-          </div>
-        </section>
-
-        <section style="margin-bottom: 60px;">
-          <h2 style="font-size: 28px; font-weight: 700; color: #f59e0b; margin-bottom: 25px; border-bottom: 2px solid #27272a; padding-bottom: 10px;">
-            All 70+ Premium Digital Subscriptions
-          </h2>
-          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/gemini-18-month" style="color: #ffffff; text-decoration: none;">Gemini 18 month Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">100% Genuine Official License, Instant Delivery on WhatsApp</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 999</span>
-                <a href="/product/gemini-18-month" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/netflix" style="color: #ffffff; text-decoration: none;">Netflix Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">100% Secure, Vast library of movies and TV shows</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
-                <a href="/product/netflix" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/cursor-ai" style="color: #ffffff; text-decoration: none;">Cursor AI Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">AI-powered code writing & smart autocomplete, AI-powered code generation</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 3,000</span>
-                <a href="/product/cursor-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/claude-ai" style="color: #ffffff; text-decoration: none;">Claude AI Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Provides thoughtful, human-like responses for a wide range of tasks, Supports writing assistance, research summaries, and content planning</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,500</span>
-                <a href="/product/claude-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/chatgpt" style="color: #ffffff; text-decoration: none;">ChatGPT Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">GPT-4o & o1 Reasoning Models Unlocked, Advanced Voice Mode & Vision</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,000</span>
-                <a href="/product/chatgpt" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/grok-ai" style="color: #ffffff; text-decoration: none;">Grok Ai Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Real-time AI answers, Real-time AI answers</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,500</span>
-                <a href="/product/grok-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Design Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/capcut-pro" style="color: #ffffff; text-decoration: none;">CapCut Pro Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Video editing tools, Intuitive video editing interface</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,000</span>
-                <a href="/product/capcut-pro" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">SEO Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/vidiq" style="color: #ffffff; text-decoration: none;">VidIQ Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Keyword Research & Trend Alerts, Competitor Analysis Tool</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 650</span>
-                <a href="/product/vidiq" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/leonardo-ai" style="color: #ffffff; text-decoration: none;">Leonardo AI Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">AI-powered image generation, Generate detailed AI-powered visuals directly from text prompts</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,700</span>
-                <a href="/product/leonardo-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/elevenlabs-creator-plan" style="color: #ffffff; text-decoration: none;">ElevenLabs – Creator Plan Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">High-quality AI text-to-speech voices, Ultra-realistic human-like voiceovers</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,300</span>
-                <a href="/product/elevenlabs-creator-plan" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/heygen-ai" style="color: #ffffff; text-decoration: none;">HeyGen AI Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Create videos using realistic AI avatars, Realistic AI avatars and voices</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 6,500</span>
-                <a href="/product/heygen-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/ideogram-ai" style="color: #ffffff; text-decoration: none;">Ideogram Ai Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Generate AI images directly from text prompts, High-quality image generation</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,600</span>
-                <a href="/product/ideogram-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Design Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/adobe-creative-cloud-monthly" style="color: #ffffff; text-decoration: none;">Adobe Creative Cloud Monthly Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Full access to 20+ creative apps, Access to 20+ Adobe apps including Photoshop, Illustrator, Premiere Pro, After Effects, InDesign, Lightroom, and Acrobat.</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,500</span>
-                <a href="/product/adobe-creative-cloud-monthly" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/stealth-writer" style="color: #ffffff; text-decoration: none;">Stealth Writer Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Humanizes AI-generated text effectively, AI Content Humanizer</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 3,000</span>
-                <a href="/product/stealth-writer" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Design Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/midjourney-monthly" style="color: #ffffff; text-decoration: none;">Midjourney Monthly Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">AI-Powered Image Generation, High-Resolution & Artistic Outputs</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,000</span>
-                <a href="/product/midjourney-monthly" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/coursera-yearly" style="color: #ffffff; text-decoration: none;">Coursera Yearly Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Unlimited access to thousands of courses, Courses from top universities & companies</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,000</span>
-                <a href="/product/coursera-yearly" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/kling-ai" style="color: #ffffff; text-decoration: none;">Kling AI Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Create AI videos directly from text prompts, Text-to-video generation</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,500</span>
-                <a href="/product/kling-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/genspark-ai" style="color: #ffffff; text-decoration: none;">Genspark Ai Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Generate written content for blogs, articles, and marketing copy, AI-powered summarized answers</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 5,000</span>
-                <a href="/product/genspark-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Design Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/envato-elements" style="color: #ffffff; text-decoration: none;">Envato Elements Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Unlimited downloads, Unlimited creative asset downloads</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,500</span>
-                <a href="/product/envato-elements" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/microsoft-office-365" style="color: #ffffff; text-decoration: none;">Microsoft Office 365 Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Includes Word, Excel, PowerPoint, Outlook, and OneDrive, Cloud-based productivity suite</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,500</span>
-                <a href="/product/microsoft-office-365" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/luma-ai" style="color: #ffffff; text-decoration: none;">Luma Ai Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Create cinematic-style AI videos with realistic visuals, AI-powered cinematic visual generation</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,800</span>
-                <a href="/product/luma-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/hailou-ai" style="color: #ffffff; text-decoration: none;">Hailou AI Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Text-to-video generation, Convert images into engaging animated videos</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,800</span>
-                <a href="/product/hailou-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Design Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/recraft-ai" style="color: #ffffff; text-decoration: none;">Recraft AI Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">AI-powered visual generation, Generate high-quality vector graphics and illustrations</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,800</span>
-                <a href="/product/recraft-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/paperpal" style="color: #ffffff; text-decoration: none;">Paperpal Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Improves academic writing clarity and correctness, AI-powered grammar and clarity checks</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 3,000</span>
-                <a href="/product/paperpal" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/fish-audio" style="color: #ffffff; text-decoration: none;">Fish Audio Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Generate natural and realistic AI voice audio, AI-powered natural voice generation</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,500</span>
-                <a href="/product/fish-audio" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Design Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/picsart" style="color: #ffffff; text-decoration: none;">PicsArt Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Easy photo editing with filters, effects, and overlays, AI photo editing tools</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 750</span>
-                <a href="/product/picsart" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/originality" style="color: #ffffff; text-decoration: none;">Originality Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Detects AI-generated vs human-written content, High accuracy AI content detection</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,300</span>
-                <a href="/product/originality" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/captions-ai" style="color: #ffffff; text-decoration: none;">Captions AI Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Automatically generates captions from speech, Automatic AI-powered caption generation</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,700</span>
-                <a href="/product/captions-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/trading-view" style="color: #ffffff; text-decoration: none;">Trading View Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Advanced Charting Tool, Real-time market data</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,000</span>
-                <a href="/product/trading-view" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/freepik-premium-plus" style="color: #ffffff; text-decoration: none;">Freepik Premium Plus Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Unlimited premium asset downloads, Unlimited access to premium stock content (photos, vectors, PSDs, templates)</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 4,000</span>
-                <a href="/product/freepik-premium-plus" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/nexlev" style="color: #ffffff; text-decoration: none;">Nexlev Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Helps find profitable and low-competition niches, Discover profitable YouTube niches effortlessly</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,100</span>
-                <a href="/product/nexlev" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/runway-ml" style="color: #ffffff; text-decoration: none;">Runway ML Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">AI-powered video editing suite, AI video generation from text prompts</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,500</span>
-                <a href="/product/runway-ml" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/writehuman" style="color: #ffffff; text-decoration: none;">WriteHuman Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">AI-to-human text transformation, Converts AI-generated text into natural, human-like writing</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,700</span>
-                <a href="/product/writehuman" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/grammarly" style="color: #ffffff; text-decoration: none;">Grammarly Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Real-time grammar, spelling & punctuation correction, Punctuation and clarity improvements</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,000</span>
-                <a href="/product/grammarly" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/google-drive-veo3" style="color: #ffffff; text-decoration: none;">Google Drive + Veo3 Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Secure cloud storage for files & media, Smart AI video generation</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,000</span>
-                <a href="/product/google-drive-veo3" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/veed-io" style="color: #ffffff; text-decoration: none;">VEED.io Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Online video editing with no software installation, Online video editing in browser</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 10.8</span>
-                <a href="/product/veed-io" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">AI Tools</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/perplexity-ai" style="color: #ffffff; text-decoration: none;">Perplexity AI Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">AI-powered search with source citations, AI-powered direct answers</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,000</span>
-                <a href="/product/perplexity-ai" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/skillshare" style="color: #ffffff; text-decoration: none;">Skillshare Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Access to thousands of creative and professional courses, Short, practical classes focused on real skills</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 16.2</span>
-                <a href="/product/skillshare" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/linkedin-sales-navigator-monthly" style="color: #ffffff; text-decoration: none;">LinkedIn Sales Navigator Monthly Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Advanced lead and account search, 50 InMail credits per month to message prospects outside your network</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 19.8</span>
-                <a href="/product/linkedin-sales-navigator-monthly" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/linkedin-business-yearly" style="color: #ffffff; text-decoration: none;">LinkedIn Business Yearly Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Unlimited people search beyond basic LinkedIn limits, Annual LinkedIn Premium Business subscription</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 8,000</span>
-                <a href="/product/linkedin-business-yearly" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/udemy" style="color: #ffffff; text-decoration: none;">Udemy Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Thousands of online courses, Access to a wide range of professional and skill-based courses</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,500</span>
-                <a href="/product/udemy" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/semrush" style="color: #ffffff; text-decoration: none;">SEMRush Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Keyword research & suggestions to boost rankings, Comprehensive SEO toolkit</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,000</span>
-                <a href="/product/semrush" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Productivity</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/turnitin-instructor" style="color: #ffffff; text-decoration: none;">Turnitin Instructor Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Plagiarism and similarity detection, Similarity & plagiarism reports for submitted work</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 3.6</span>
-                <a href="/product/turnitin-instructor" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">VPN</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/nord-vpn" style="color: #ffffff; text-decoration: none;">Nord Vpn Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">100% Secure, Encrypts internet traffic securely</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
-                <a href="/product/nord-vpn" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">VPN</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/expressvpn" style="color: #ffffff; text-decoration: none;">ExpressVPN Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">High-speed servers, Ultra-fast connection speeds</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
-                <a href="/product/expressvpn" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">VPN</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/cyberghost-vpn" style="color: #ffffff; text-decoration: none;">CyberGhost VPN Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Strict No-Logs Policy, 100% Secure</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 500</span>
-                <a href="/product/cyberghost-vpn" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">VPN</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/surfshark-vpn" style="color: #ffffff; text-decoration: none;">Surfshark Vpn Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Secure VPN encryption (AES-256 & WireGuard/IKEv2/OpenVPN), Encrypts internet traffic</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 350</span>
-                <a href="/product/surfshark-vpn" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">VPN</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/proton-vpn" style="color: #ffffff; text-decoration: none;">Proton VPN Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Strong AES-256 bit encryption, 100% Secure</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 350</span>
-                <a href="/product/proton-vpn" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">VPN</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/windscribe-vpn" style="color: #ffffff; text-decoration: none;">Windscribe VPN Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Strong encryption, Strong AES-256 encryption</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 450</span>
-                <a href="/product/windscribe-vpn" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">VPN</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/hma-vpn" style="color: #ffffff; text-decoration: none;">HMA VPN Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Global servers, Global server network, 210+ countries</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 500</span>
-                <a href="/product/hma-vpn" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/youtube-premium" style="color: #ffffff; text-decoration: none;">YouTube Premium Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Ad-Free Video Streaming, Watch YouTube videos completely ad-free</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
-                <a href="/product/youtube-premium" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/chegg" style="color: #ffffff; text-decoration: none;">Chegg Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">100% Secure, Step-by-step homework solutions</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
-                <a href="/product/chegg" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/hotstar-ca" style="color: #ffffff; text-decoration: none;">Hotstar (CA) Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Disney content, Vast library of Bollywood films</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 750</span>
-                <a href="/product/hotstar-ca" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/hbo-max" style="color: #ffffff; text-decoration: none;">HBO MAX Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Ad-free streaming, Blockbuster movies, new releases</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 350</span>
-                <a href="/product/hbo-max" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/crunchyroll" style="color: #ffffff; text-decoration: none;">Crunchyroll Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Anime library, Vast anime library</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
-                <a href="/product/crunchyroll" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/hulu" style="color: #ffffff; text-decoration: none;">HULU Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">100% Secure, Vast library of TV shows & movies</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
-                <a href="/product/hulu" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/discovery" style="color: #ffffff; text-decoration: none;">Discovery+ Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Documentaries, Stream documentaries, reality, factual content</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 450</span>
-                <a href="/product/discovery" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/altbalaji" style="color: #ffffff; text-decoration: none;">ALTBalaji Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Indian originals, Original Indian web series and movies</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
-                <a href="/product/altbalaji" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/disney" style="color: #ffffff; text-decoration: none;">Disney+ Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Ad-free streaming, Vast library of Disney classics and new releases</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 450</span>
-                <a href="/product/disney" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/peacock" style="color: #ffffff; text-decoration: none;">Peacock Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">NBC content, Vast library of movies</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 450</span>
-                <a href="/product/peacock" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/chaupal" style="color: #ffffff; text-decoration: none;">Chaupal Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Punjabi content, Exclusive Punjabi movies streaming</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
-                <a href="/product/chaupal" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/ullu" style="color: #ffffff; text-decoration: none;">ULLU Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Exclusive originals, Exclusive Indian web series & films</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
-                <a href="/product/ullu" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/sony-liv" style="color: #ffffff; text-decoration: none;">Sony LIV Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">Live sports, Live sports streaming</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 450</span>
-                <a href="/product/sony-liv" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/paramount" style="color: #ffffff; text-decoration: none;">Paramount+ Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">100% Secure, Stream blockbuster movies anytime, anywhere</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 650</span>
-                <a href="/product/paramount" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/iptv" style="color: #ffffff; text-decoration: none;">IPTV Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">100% Secure, Live TV, sports, movies, and series</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
-                <a href="/product/iptv" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">Streaming</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/tapmad" style="color: #ffffff; text-decoration: none;">Tapmad Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">100% Secure, Pakistani dramas & movies</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 400</span>
-                <a href="/product/tapmad" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">RDS/VPS</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/2-gb-rdp-2-cores" style="color: #ffffff; text-decoration: none;">2 GB RDP (2 Cores) Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">100% Secure, 2 GB RAM, 2 CPU Cores</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 1,500</span>
-                <a href="/product/2-gb-rdp-2-cores" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">RDS/VPS</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/4-gb-rdp-4-cores" style="color: #ffffff; text-decoration: none;">4 GB RDP (4 Cores) Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">4 vCPU Cores, 4 GB RAM</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 2,200</span>
-                <a href="/product/4-gb-rdp-4-cores" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">RDS/VPS</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/8-gb-rdp-6-cores" style="color: #ffffff; text-decoration: none;">8 GB RDP (6 Cores) Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">6 vCPU Cores, 8 GB RAM for demanding applications</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 4,500</span>
-                <a href="/product/8-gb-rdp-6-cores" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">RDS/VPS</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/12-gb-rdp-6-cores" style="color: #ffffff; text-decoration: none;">12 GB RDP (6 Cores) Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">High-performance 12 GB RAM, 6 vCPU Cores</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 6,500</span>
-                <a href="/product/12-gb-rdp-6-cores" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-            <article style="background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-              <div>
-                <span style="font-size: 11px; background: rgba(245, 158, 11, 0.15); color: #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 600; text-transform: uppercase;">RDS/VPS</span>
-                <h3 style="font-size: 20px; font-weight: 700; margin: 12px 0 8px; color: #ffffff;">
-                  <a href="/product/24-gb-rdp-8-cores" style="color: #ffffff; text-decoration: none;">24 GB RDP (8 Cores) Low Price in PK</a>
-                </h3>
-                <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5; margin-bottom: 15px;">8 vCPU Cores, High-performance RDP server</p>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #27272a; padding-top: 12px;">
-                <span style="font-size: 16px; font-weight: 800; color: #10b981;">PKR 8,500</span>
-                <a href="/product/24-gb-rdp-8-cores" style="font-size: 12px; background: #27272a; color: #ffffff; padding: 6px 14px; border-radius: 8px; text-decoration: none; font-weight: 600;">View Plans →</a>
-              </div>
-            </article>
-
-          </div>
-        </section>
-
-        <section style="margin-bottom: 60px; background: #121215; border: 1px solid #27272a; border-radius: 24px; padding: 35px;">
-          <h2 style="font-size: 26px; font-weight: 700; color: #ffffff; margin-bottom: 20px;">Why Choose Nexa Digital in Pakistan?</h2>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
-            <div>
-              <h4 style="color: #f59e0b; font-size: 16px; margin-bottom: 8px;">⚡ Instant WhatsApp Delivery</h4>
-              <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5;">Get your accounts and license details delivered directly to your WhatsApp within 2-5 minutes of confirmation.</p>
+        <!-- Product FAQs -->
+        
+          <section style="margin-top:40px;">
+            <h2 style="font-size:22px; font-weight:700; color:#ffffff; margin-bottom:20px;">Frequently Asked Questions about 4 GB RDP (4 Cores)</h2>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              
+                <div style="background:#18181b; border:1px solid #27272a; border-radius:14px; padding:18px;">
+                  <h3 style="font-size:15px; font-weight:600; color:#f59e0b; margin-bottom:6px;">How is the 4 GB RDP delivered?</h3>
+                  <p style="font-size:13px; color:#d4d4d8; line-height:1.5; margin:0;">Credentials are sent in 2-5 minutes after order.</p>
+                </div>
+              
+                <div style="background:#18181b; border:1px solid #27272a; border-radius:14px; padding:18px;">
+                  <h3 style="font-size:15px; font-weight:600; color:#f59e0b; margin-bottom:6px;">What kind of account will I receive?</h3>
+                  <p style="font-size:13px; color:#d4d4d8; line-height:1.5; margin:0;">You will receive a full RDP account with 4 GB RAM and 4 vCPU cores.</p>
+                </div>
+              
+                <div style="background:#18181b; border:1px solid #27272a; border-radius:14px; padding:18px;">
+                  <h3 style="font-size:15px; font-weight:600; color:#f59e0b; margin-bottom:6px;">Does this RDP come with a warranty?</h3>
+                  <p style="font-size:13px; color:#d4d4d8; line-height:1.5; margin:0;">Yes, it comes with a genuine license and a warranty.</p>
+                </div>
+              
+                <div style="background:#18181b; border:1px solid #27272a; border-radius:14px; padding:18px;">
+                  <h3 style="font-size:15px; font-weight:600; color:#f59e0b; margin-bottom:6px;">Can I choose the region for my RDP?</h3>
+                  <p style="font-size:13px; color:#d4d4d8; line-height:1.5; margin:0;">Yes, you can choose the region for your RDP.</p>
+                </div>
+              
+                <div style="background:#18181b; border:1px solid #27272a; border-radius:14px; padding:18px;">
+                  <h3 style="font-size:15px; font-weight:600; color:#f59e0b; margin-bottom:6px;">How do I log in to the RDP?</h3>
+                  <p style="font-size:13px; color:#d4d4d8; line-height:1.5; margin:0;">You will receive login credentials via email.</p>
+                </div>
+              
+                <div style="background:#18181b; border:1px solid #27272a; border-radius:14px; padding:18px;">
+                  <h3 style="font-size:15px; font-weight:600; color:#f59e0b; margin-bottom:6px;">Is technical support available for the 4 GB RDP?</h3>
+                  <p style="font-size:13px; color:#d4d4d8; line-height:1.5; margin:0;">Yes, we offer 24/7 support via WhatsApp.</p>
+                </div>
+              
+                <div style="background:#18181b; border:1px solid #27272a; border-radius:14px; padding:18px;">
+                  <h3 style="font-size:15px; font-weight:600; color:#f59e0b; margin-bottom:6px;">What is the validity period of this RDP?</h3>
+                  <p style="font-size:13px; color:#d4d4d8; line-height:1.5; margin:0;">The RDP is available for monthly renewals.</p>
+                </div>
+              
             </div>
-            <div>
-              <h4 style="color: #f59e0b; font-size: 16px; margin-bottom: 8px;">🔒 100% Genuine & Safe</h4>
-              <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5;">Every subscription is verified, private, and secured with complete replacement guarantee during the active period.</p>
-            </div>
-            <div>
-              <h4 style="color: #f59e0b; font-size: 16px; margin-bottom: 8px;">💳 EasyPaisa, JazzCash & Bank Transfer</h4>
-              <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5;">Pay effortlessly in Pakistani Rupees (PKR) with 0 international card decline issues.</p>
-            </div>
-            <div>
-              <h4 style="color: #f59e0b; font-size: 16px; margin-bottom: 8px;">🤝 24/7 Dedicated Support</h4>
-              <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5;">Our specialized customer care team is always active on WhatsApp to assist you.</p>
-            </div>
-          </div>
-        </section>
-
-        <section style="margin-bottom: 60px;">
-          <h2 style="font-size: 26px; font-weight: 700; color: #ffffff; margin-bottom: 20px;">Frequently Asked Questions (NEXA Pakistan)</h2>
-          <div style="display: flex; flex-direction: column; gap: 15px;">
-            <div style="background: #18181b; padding: 20px; border-radius: 14px; border: 1px solid #27272a;">
-              <h3 style="font-size: 16px; color: #f59e0b; margin-bottom: 8px;">What is Nexa Digital (NEXA / Nexa Digital Tools)?</h3>
-              <p style="font-size: 13px; color: #d4d4d8; line-height: 1.5;">Nexa Digital (commonly known as NEXA, nex, or Nexa Digital Tools at nexadigitaltools.com) is Pakistan's premier verified digital subscription platform. It provides genuine, discounted access to 70+ AI, creative, developer, and SEO tools including ChatGPT Plus, Canva Pro, CapCut Pro, Gemini Advanced, and Claude 3.5 Sonnet with instant WhatsApp delivery.</p>
-            </div>
-            <div style="background: #18181b; padding: 20px; border-radius: 14px; border: 1px solid #27272a;">
-              <h3 style="font-size: 16px; color: #f59e0b; margin-bottom: 8px;">Where can I buy ChatGPT Plus at the lowest price in Pakistan?</h3>
-              <p style="font-size: 13px; color: #d4d4d8; line-height: 1.5;">Nexa Digital offers verified ChatGPT Plus (GPT-4o & o1) for PKR 2,300/month in Pakistan, compared to the official $20 (~PKR 5,700). It includes instant 2-5 minute WhatsApp delivery and local payment via EasyPaisa, JazzCash, or bank transfer.</p>
-            </div>
-            <div style="background: #18181b; padding: 20px; border-radius: 14px; border: 1px solid #27272a;">
-              <h3 style="font-size: 16px; color: #f59e0b; margin-bottom: 8px;">What is the low price of Gemini Advanced / Gemini Pro in Pakistan?</h3>
-              <p style="font-size: 13px; color: #d4d4d8; line-height: 1.5;">Google Gemini Advanced (18-Month access with 2TB cloud storage) is available on Nexa Digital for just PKR 999 with 24/7 dedicated support and replacement warranty.</p>
-            </div>
-            <div style="background: #18181b; padding: 20px; border-radius: 14px; border: 1px solid #27272a;">
-              <h3 style="font-size: 16px; color: #f59e0b; margin-bottom: 8px;">How to buy Canva Pro at cheap price in Pakistan?</h3>
-              <p style="font-size: 13px; color: #d4d4d8; line-height: 1.5;">Nexa Digital provides Canva Pro on your personal email for just PKR 1,000 with 1-click background remover, 100M+ stock assets, and brand kits.</p>
-            </div>
-            <div style="background: #18181b; padding: 20px; border-radius: 14px; border: 1px solid #27272a;">
-              <h3 style="font-size: 16px; color: #f59e0b; margin-bottom: 8px;">Is Nexa Digital (NEXA) trusted and genuine in Pakistan?</h3>
-              <p style="font-size: 13px; color: #d4d4d8; line-height: 1.5;">Yes, Nexa Digital (NEXA) is trusted by thousands of Pakistani creators, developers, freelancers, and digital marketing agencies, featuring 100% private licenses, full period replacement warranty, and 24/7 customer care.</p>
-            </div>
-            <div style="background: #18181b; padding: 20px; border-radius: 14px; border: 1px solid #27272a;">
-              <h3 style="font-size: 16px; color: #f59e0b; margin-bottom: 8px;">How fast is delivery on Nexa Digital?</h3>
-              <p style="font-size: 13px; color: #d4d4d8; line-height: 1.5;">Delivery is instant via WhatsApp within 2 to 5 minutes after payment confirmation.</p>
-            </div>
-            <div style="background: #18181b; padding: 20px; border-radius: 14px; border: 1px solid #27272a;">
-              <h3 style="font-size: 16px; color: #f59e0b; margin-bottom: 8px;">What payment methods are accepted by Nexa Digital?</h3>
-              <p style="font-size: 13px; color: #d4d4d8; line-height: 1.5;">Nexa Digital accepts all Pakistani local payment methods: EasyPaisa, JazzCash, SadaPay, NayaPay, direct Pakistani Bank Transfer, and Crypto (USDT).</p>
-            </div>
-          </div>
-        </section>
+          </section>
+        
       </main>
 
-      <footer style="border-top: 1px solid #27272a; padding: 40px 20px; text-align: center; color: #71717a; font-size: 13px;">
-        <p style="margin-bottom: 10px; color: #a1a1aa;">© 2026 Nexa Digital (nexadigitaltools.com). All rights reserved.</p>
-        <p>Buy ChatGPT Plus, Canva Pro, CapCut Pro & 70+ AI Subscriptions at Low Price in Pakistan.</p>
-        <div style="margin-top: 15px; display: flex; justify-content: center; gap: 15px;">
-          <a href="/tools" style="color: #a1a1aa; text-decoration: none;">All Tools</a>
-          <a href="/blog" style="color: #f59e0b; text-decoration: none;">Guides & Blog</a>
-          <a href="/about" style="color: #a1a1aa; text-decoration: none;">About Us</a>
-          <a href="/contact" style="color: #a1a1aa; text-decoration: none;">Contact Support</a>
-        </div>
+      <!-- Footer -->
+      <footer style="border-top:1px solid #27272a; padding:40px 20px; text-align:center; color:#71717a; font-size:13px; margin-top:60px;">
+        <p>© 2026 Nexa Digital (nexadigitaltools.com). All rights reserved.</p>
+        <p>Buy ChatGPT Plus, Canva Pro, CapCut Pro &amp; 70+ AI Subscriptions at Low Price in Pakistan.</p>
       </footer>
-</div>
+    </div>
+  </div>
     <noscript>
       <!-- SEO Crawler Index: 100% Accessible to Search Engines without UI Flash for Human Users -->
       <header style="padding: 20px; border-bottom: 1px solid #27272a; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
