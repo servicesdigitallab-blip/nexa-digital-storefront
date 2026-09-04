@@ -22,7 +22,7 @@
       "category_name": "AI Tools",
       "plans": [
         {
-          "id": "16c8f24a-5506-4f74-a02b-a8276a4cf00a",
+          "id": "62b86cfa-7c71-499e-9255-0b9a0ca034d2",
           "product_id": "fdda7587-3818-4266-aa19-032ca75896e8",
           "name": "Monthly Plan",
           "period": "18 Month",
@@ -31,7 +31,7 @@
           "popular": true,
           "discount": 0,
           "features": null,
-          "created_at": "2026-09-02T08:32:25.625188+00:00"
+          "created_at": "2026-09-04T06:03:45.084863+00:00"
         }
       ],
       "features": [
@@ -41,12 +41,12 @@
       ],
       "faqs": [
         {
-          "id": "b6d8c406-7938-4206-b487-25d01d24888e",
+          "id": "3d12d57a-e6b7-4178-8634-a864f7425b29",
           "product_id": "fdda7587-3818-4266-aa19-032ca75896e8",
           "question": "How fast is delivery?",
           "answer": "Within 2-5 minutes on WhatsApp.",
           "sort_order": 0,
-          "created_at": "2026-09-02T08:32:26.619712+00:00"
+          "created_at": "2026-09-04T06:03:46.925389+00:00"
         }
       ]
     },

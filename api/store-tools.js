@@ -5,18 +5,31 @@ const supabaseUrl = process.env.SUPABASE_URL || 'https://ydbkvjgotjsjjfvruoei.su
 const supabaseKey = process.env.SUPABASE_ANON_KEY || 'sb_publishable_5jsN-ZSP1YLw4Tu_mBg2Jw_5hv0HgOv';
 const SETTINGS_ID = '066a4027-9df8-45ee-ac41-32f26f11a507';
 
+let memoryCache = null;
+let memoryCacheTime = 0;
+const CACHE_TTL = 15000; // 15 seconds memory cache
+
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  // Absolute zero caching on API so all devices see updates instantly
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0');
-  res.setHeader('CDN-Cache-Control', 'no-store');
-  res.setHeader('Vercel-CDN-Cache-Control', 'no-store');
-  res.setHeader('Pragma', 'no-cache');
-  res.setHeader('Expires', '0');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
+
+  const urlStr = req.url || '';
+  const forceRefresh = urlStr.includes('refresh=1') || urlStr.includes('purge=1');
+  const now = Date.now();
+
+  // Instant response if memory cache is valid (< 15s) and not forced
+  if (!forceRefresh && memoryCache && (now - memoryCacheTime < CACHE_TTL)) {
+    res.setHeader('Cache-Control', 'public, max-age=5, s-maxage=10, stale-while-revalidate=30');
+    res.setHeader('X-Cache', 'HIT-MEMORY');
+    return res.status(200).json(memoryCache);
+  }
+
+  // Edge cache headers: 10s freshness + background stale-while-revalidate
+  res.setHeader('Cache-Control', 'public, max-age=5, s-maxage=10, stale-while-revalidate=30');
+  res.setHeader('X-Cache', 'MISS');
 
   // 1. Try Supabase Live Tables in Ultra-Fast Parallel Queries
   try {
@@ -85,6 +98,8 @@ module.exports = async (req, res) => {
       } catch(e) {}
 
       if (fullProducts.length > 0) {
+        memoryCache = fullProducts;
+        memoryCacheTime = Date.now();
         return res.status(200).json(fullProducts);
       }
     }
