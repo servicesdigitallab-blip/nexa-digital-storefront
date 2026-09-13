@@ -5,7 +5,7 @@
 
   <url>
     <loc>https://nexadigitaltools.com</loc>
-    <lastmod>2026-09-04</lastmod>
+    <lastmod>2026-09-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -836,5 +836,29 @@
       <image:loc>https://nexadigitaltools.com/product-images/497b79d030fd6ddfbe320e29ebeed459.jpg</image:loc>
       <image:title>24 GB RDP (8 Cores) Subscription — Nexa Digital</image:title>
     </image:image>
+  </url>
+  <url>
+    <loc>https://nexadigitaltools.com/blog/chatgpt-vs-claude-vs-gemini-best-ai-pakistan</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://nexadigitaltools.com/blog/best-cheap-vpns-pakistan-nordvpn-surfshark-guide</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://nexadigitaltools.com/blog/coursera-plus-udemy-annual-subscription-pakistan</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://nexadigitaltools.com/blog/midjourney-subscription-pakistan-low-price-guide</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>
 </urlset>
