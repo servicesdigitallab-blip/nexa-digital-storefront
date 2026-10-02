@@ -6,9 +6,9 @@
     <meta name="theme-color" content="#09090b" />
     
     <!-- Primary SEO Title & Meta -->
-    <title>Buy Turnitin Instructor in Pakistan (PKR 3.6) — Low Price | Nexa Digital Tools</title>
-    <meta name="title" content="Turnitin Instructor Low Price in Pakistan (PKR 3.6) — Nexa Digital Tools" />
-    <meta name="description" content="Buy genuine Turnitin Instructor in Pakistan for PKR 3.6 from Nexa Digital Tools (nexadigitaltools.com). Verified private subscription with EasyPaisa, JazzCash, instant 2-5 min WhatsApp delivery and full replacement warranty." />
+    <title>Buy Turnitin Instructor in Pakistan (PKR 2,199) — Low Price | Nexa Digital Tools</title>
+    <meta name="title" content="Turnitin Instructor Low Price in Pakistan (PKR 2,199) — Nexa Digital Tools" />
+    <meta name="description" content="Buy genuine Turnitin Instructor in Pakistan for PKR 2,199 from Nexa Digital Tools (nexadigitaltools.com). Verified private subscription with EasyPaisa, JazzCash, instant 2-5 min WhatsApp delivery and full replacement warranty." />
     <meta name="keywords" content="Turnitin Instructor low price in pk, buy Turnitin Instructor pakistan, cheap Turnitin Instructor, Turnitin Instructor easypaisa jazzcash, Turnitin Instructor nexa digital tool, Turnitin Instructor nexa digital tools, nexa digital tool, nexa digital tools, nexa digtial tool, nexa digtial tools, turnitin-instructor subscription pakistan" />
     <meta name="author" content="Nexa Digital Tools" />
     <meta name="publisher" content="Nexa Digital Tools" />
@@ -28,21 +28,28 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://nexadigitaltools.com/product/turnitin-instructor" />
     <meta property="og:site_name" content="Nexa Digital Tools" />
-    <meta property="og:title" content="Buy Turnitin Instructor in Pakistan (PKR 3.6) — Low Price | Nexa Digital Tools" />
-    <meta property="og:description" content="Buy genuine Turnitin Instructor in Pakistan for PKR 3.6 from Nexa Digital Tools (nexadigitaltools.com). Verified private subscription with EasyPaisa, JazzCash, instant 2-5 min WhatsApp delivery and full replacement warranty." />
+    <meta property="og:title" content="Buy Turnitin Instructor in Pakistan (PKR 2,199) — Low Price | Nexa Digital Tools" />
+    <meta property="og:description" content="Buy genuine Turnitin Instructor in Pakistan for PKR 2,199 from Nexa Digital Tools (nexadigitaltools.com). Verified private subscription with EasyPaisa, JazzCash, instant 2-5 min WhatsApp delivery and full replacement warranty." />
     <meta property="og:image" content="https://nexadigitaltools.com/product-images/6b734f155eda1567083084653b0c1cac.png" />
-    <meta property="og:image:secure_url" content="https://nexadigitaltools.com/og-image.jpg?v=2026" />
+    <meta property="og:image:secure_url" content="https://nexadigitaltools.com/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:alt" content="Nexa Digital Tools Logo" />
     <meta property="og:locale" content="en_US" />
 
+    <!-- Square Fallback for WhatsApp & Social Thumbnails -->
+    <meta property="og:image" content="https://nexadigitaltools.com/product-images/6b734f155eda1567083084653b0c1cac.png" />
+    <meta property="og:image:secure_url" content="https://nexadigitaltools.com/logo.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:type" content="image/png" />
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://nexadigitaltools.com/product/turnitin-instructor" />
-    <meta name="twitter:title" content="Buy Turnitin Instructor in Pakistan (PKR 3.6) — Low Price | Nexa Digital Tools" />
-    <meta name="twitter:description" content="Buy genuine Turnitin Instructor in Pakistan for PKR 3.6 from Nexa Digital Tools (nexadigitaltools.com). Verified private subscription with EasyPaisa, JazzCash, instant 2-5 min WhatsApp delivery and full replacement warranty." />
+    <meta name="twitter:title" content="Buy Turnitin Instructor in Pakistan (PKR 2,199) — Low Price | Nexa Digital Tools" />
+    <meta name="twitter:description" content="Buy genuine Turnitin Instructor in Pakistan for PKR 2,199 from Nexa Digital Tools (nexadigitaltools.com). Verified private subscription with EasyPaisa, JazzCash, instant 2-5 min WhatsApp delivery and full replacement warranty." />
     <meta name="twitter:image" content="https://nexadigitaltools.com/product-images/6b734f155eda1567083084653b0c1cac.png" />
 
     <!-- WhatsApp & Scraper Direct Fallback (Square Logo & Banner) -->
@@ -283,12 +290,23 @@
     <!-- Instant Fast Edge Pre-cache & Immediate Live Sync -->
     <script>
       (function() {
-        // High priority live fetch from Edge API (10ms response)
-        fetch('/api/store/tools', { priority: 'high' })
+        try {
+          var local = sessionStorage.getItem('nexa_tools_cache');
+          if (local) {
+            var parsed = JSON.parse(local);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              window.__nexa_tools_cache = parsed;
+            }
+          }
+        } catch(e) {}
+
+        // High priority live fetch bypassing edge cache
+        fetch('/api/store/tools?t=' + Date.now(), { priority: 'high', cache: 'no-store' })
           .then(function(r) { return r.ok ? r.json() : null; })
           .then(function(tools) {
             if (Array.isArray(tools) && tools.length > 0) {
               window.__nexa_tools_cache = tools;
+              try { sessionStorage.setItem('nexa_tools_cache', JSON.stringify(tools)); } catch(e) {}
               window.dispatchEvent(new CustomEvent('nexa:tools_updated', { detail: tools }));
             }
           })
@@ -329,25 +347,6 @@
 
     <script type="module" crossorigin src="/assets/index-DZT4_D0V.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-g2WHYVtL.css">
-  
-    <script>
-      (function() {
-        const originalError = console.error;
-        console.error = function(...args) {
-          originalError.apply(console, args);
-          const str = args.map(a => (typeof a === 'object' ? (a.stack || JSON.stringify(a)) : a)).join(' ');
-          if (str.includes('React') || str.includes('Error') || str.includes('ReferenceError') || str.includes('TypeError')) {
-            const div = document.createElement('div');
-            div.style.position = 'fixed';
-            div.style.top = '0'; div.style.left = '0'; div.style.width = '100%'; div.style.zIndex = '999999';
-            div.style.backgroundColor = 'darkred'; div.style.color = 'white'; div.style.padding = '20px';
-            div.style.fontFamily = 'monospace'; div.style.fontSize = '12px'; div.style.overflow = 'auto'; div.style.maxHeight = '100vh';
-            div.innerHTML = '<b>INTERCEPTED REACT CRASH:</b><br/><pre style="white-space: pre-wrap;">' + str + '</pre>';
-            document.body.appendChild(div);
-          }
-        };
-      })();
-    </script>
   
     <!-- Schema.org JSON-LD: Product Catalog ItemList -->
     <script type="application/ld+json">
@@ -1327,7 +1326,7 @@
   "@type": "Product",
   "name": "Turnitin Instructor Subscription",
   "image": "https://nexadigitaltools.com/product-images/6b734f155eda1567083084653b0c1cac.png",
-  "description": "Buy genuine Turnitin Instructor in Pakistan for PKR 3.6 from Nexa Digital Tools (nexadigitaltools.com). Verified private subscription with EasyPaisa, JazzCash, instant 2-5 min WhatsApp delivery and full replacement warranty.",
+  "description": "Buy genuine Turnitin Instructor in Pakistan for PKR 2,199 from Nexa Digital Tools (nexadigitaltools.com). Verified private subscription with EasyPaisa, JazzCash, instant 2-5 min WhatsApp delivery and full replacement warranty.",
   "sku": "turnitin-instructor",
   "brand": {
     "@type": "Brand",
@@ -1337,7 +1336,7 @@
     "@type": "Offer",
     "url": "https://nexadigitaltools.com/product/turnitin-instructor",
     "priceCurrency": "PKR",
-    "price": 3.6,
+    "price": 2199,
     "priceValidUntil": "2027-12-31",
     "availability": "https://schema.org/InStock",
     "itemCondition": "https://schema.org/NewCondition",
@@ -1429,7 +1428,7 @@
             <!-- Price Box -->
             <div style="background:#121215; border:1px solid #27272a; border-radius:16px; padding:20px; margin-bottom:25px;">
               <div style="display:flex; align-items:baseline; gap:12px;">
-                <span style="font-size:32px; font-weight:900; color:#10b981;">PKR 3.6</span>
+                <span style="font-size:32px; font-weight:900; color:#10b981;">PKR 2,199</span>
                 <span style="font-size:18px; color:#71717a; text-decoration:line-through;">PKR 5.76</span>
               </div>
               <p style="font-size:13px; color:#f59e0b; margin-top:6px; font-weight:600;">
@@ -1442,7 +1441,7 @@
               <div style="margin-bottom:25px;">
                 <h3 style="font-size:16px; font-weight:700; color:#ffffff; margin-bottom:10px;">Key Features:</h3>
                 <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;">
-                  <li style="font-size:14px; color:#d4d4d8;">✓ Plagiarism and similarity detection</li><li style="font-size:14px; color:#d4d4d8;">✓ Similarity &amp; plagiarism reports for submitted work</li><li style="font-size:14px; color:#d4d4d8;">✓ Comprehensive academic content database</li><li style="font-size:14px; color:#d4d4d8;">✓ Comparison against extensive database of student papers, publications, and web content</li><li style="font-size:14px; color:#d4d4d8;">✓ Assignment management tools</li><li style="font-size:14px; color:#d4d4d8;">✓ Detailed match breakdown highlighting similar text</li><li style="font-size:14px; color:#d4d4d8;">✓ Assignment management workflows for instructors</li><li style="font-size:14px; color:#d4d4d8;">✓ Originality reports for student work</li><li style="font-size:14px; color:#d4d4d8;">✓ View and grade student submissions directly within the system</li><li style="font-size:14px; color:#d4d4d8;">✓ Feedback Studio for grading</li><li style="font-size:14px; color:#d4d4d8;">✓ Integrates with learning management systems</li><li style="font-size:14px; color:#d4d4d8;">✓ Supports various document types</li><li style="font-size:14px; color:#d4d4d8;">✓ Authorship investigation capabilities</li><li style="font-size:14px; color:#d4d4d8;">✓ Promotes academic integrity</li><li style="font-size:14px; color:#d4d4d8;">✓ Educator-focused interface</li>
+                  <li style="font-size:14px; color:#d4d4d8;">✓ Plagiarism and similarity detection</li><li style="font-size:14px; color:#d4d4d8;">✓ Plagiarism and similarity detection</li><li style="font-size:14px; color:#d4d4d8;">✓ Similarity &amp; plagiarism reports for submitted work</li><li style="font-size:14px; color:#d4d4d8;">✓ Similarity &amp; plagiarism reports for submitted work</li><li style="font-size:14px; color:#d4d4d8;">✓ Comprehensive academic content database</li><li style="font-size:14px; color:#d4d4d8;">✓ Comprehensive academic content database</li><li style="font-size:14px; color:#d4d4d8;">✓ Comparison against extensive database of student papers, publications, and web content</li><li style="font-size:14px; color:#d4d4d8;">✓ Comparison against extensive database of student papers, publications, and web content</li><li style="font-size:14px; color:#d4d4d8;">✓ Assignment management tools</li><li style="font-size:14px; color:#d4d4d8;">✓ Assignment management tools</li><li style="font-size:14px; color:#d4d4d8;">✓ Detailed match breakdown highlighting similar text</li><li style="font-size:14px; color:#d4d4d8;">✓ Detailed match breakdown highlighting similar text</li><li style="font-size:14px; color:#d4d4d8;">✓ Assignment management workflows for instructors</li><li style="font-size:14px; color:#d4d4d8;">✓ Assignment management workflows for instructors</li><li style="font-size:14px; color:#d4d4d8;">✓ Originality reports for student work</li><li style="font-size:14px; color:#d4d4d8;">✓ Originality reports for student work</li><li style="font-size:14px; color:#d4d4d8;">✓ View and grade student submissions directly within the system</li><li style="font-size:14px; color:#d4d4d8;">✓ View and grade student submissions directly within the system</li><li style="font-size:14px; color:#d4d4d8;">✓ Feedback Studio for grading</li><li style="font-size:14px; color:#d4d4d8;">✓ Feedback Studio for grading</li><li style="font-size:14px; color:#d4d4d8;">✓ Integrates with learning management systems</li><li style="font-size:14px; color:#d4d4d8;">✓ Integrates with learning management systems</li><li style="font-size:14px; color:#d4d4d8;">✓ Supports various document types</li><li style="font-size:14px; color:#d4d4d8;">✓ Supports various document types</li><li style="font-size:14px; color:#d4d4d8;">✓ Authorship investigation capabilities</li><li style="font-size:14px; color:#d4d4d8;">✓ Authorship investigation capabilities</li><li style="font-size:14px; color:#d4d4d8;">✓ Promotes academic integrity</li><li style="font-size:14px; color:#d4d4d8;">✓ Promotes academic integrity</li><li style="font-size:14px; color:#d4d4d8;">✓ Educator-focused interface</li><li style="font-size:14px; color:#d4d4d8;">✓ Educator-focused interface</li>
                 </ul>
               </div>
             

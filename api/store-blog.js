@@ -2,15 +2,18 @@ const fs = require('fs');
 const path = require('path');
 
 let cachedBlog = null;
+let lastBlogRead = 0;
 
 function getBlogData() {
-  if (cachedBlog) return cachedBlog;
+  const now = Date.now();
+  if (cachedBlog && (now - lastBlogRead < 5000)) return cachedBlog;
   try {
     const raw = fs.readFileSync(path.join(process.cwd(), 'data', 'blog.json'), 'utf8');
     cachedBlog = JSON.parse(raw);
+    lastBlogRead = now;
     return cachedBlog;
   } catch (e) {
-    return { posts: [], categories: [] };
+    return cachedBlog || { posts: [], categories: [] };
   }
 }
 
@@ -18,7 +21,7 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400');
+  res.setHeader('Cache-Control', 'public, max-age=10, s-maxage=30, stale-while-revalidate=60');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
 

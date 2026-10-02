@@ -30,20 +30,27 @@
     <meta property="og:site_name" content="Nexa Digital Tools" />
     <meta property="og:title" content="All 70+ Premium Digital Tools &amp; Subscriptions in Pakistan | Nexa Digital Tools" />
     <meta property="og:description" content="Explore all 70+ verified AI, SEO, creative design &amp; video editing subscriptions on Nexa Digital Tools (Nexa Digital Tool). Buy ChatGPT Plus, Canva Pro, Gemini, CapCut Pro at lowest PKR prices with instant WhatsApp delivery." />
-    <meta property="og:image" content="https://nexadigitaltools.com/og-image.jpg?v=2026" />
-    <meta property="og:image:secure_url" content="https://nexadigitaltools.com/og-image.jpg?v=2026" />
+    <meta property="og:image" content="https://nexadigitaltools.com/og-image.jpg" />
+    <meta property="og:image:secure_url" content="https://nexadigitaltools.com/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:alt" content="Nexa Digital Tools Logo" />
     <meta property="og:locale" content="en_US" />
 
+    <!-- Square Fallback for WhatsApp & Social Thumbnails -->
+    <meta property="og:image" content="https://nexadigitaltools.com/logo.png" />
+    <meta property="og:image:secure_url" content="https://nexadigitaltools.com/logo.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:type" content="image/png" />
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://nexadigitaltools.com/" />
     <meta name="twitter:title" content="Nexa Digital Tools — #1 Low Price AI Subscriptions in Pakistan" />
     <meta name="twitter:description" content="Get genuine ChatGPT Plus (PKR 2,000), Canva Pro (PKR 1,000), CapCut Pro, Claude AI & 70+ tools at low price in Pakistan with instant WhatsApp delivery." />
-    <meta name="twitter:image" content="https://nexadigitaltools.com/og-image.jpg?v=2026" />
+    <meta name="twitter:image" content="https://nexadigitaltools.com/og-image.jpg" />
 
     <!-- WhatsApp & Scraper Direct Fallback (Square Logo & Banner) -->
     <link rel="image_src" href="https://nexadigitaltools.com/logo.png" />
@@ -283,12 +290,23 @@
     <!-- Instant Fast Edge Pre-cache & Immediate Live Sync -->
     <script>
       (function() {
-        // High priority live fetch from Edge API (10ms response)
-        fetch('/api/store/tools', { priority: 'high' })
+        try {
+          var local = sessionStorage.getItem('nexa_tools_cache');
+          if (local) {
+            var parsed = JSON.parse(local);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              window.__nexa_tools_cache = parsed;
+            }
+          }
+        } catch(e) {}
+
+        // High priority live fetch bypassing edge cache
+        fetch('/api/store/tools?t=' + Date.now(), { priority: 'high', cache: 'no-store' })
           .then(function(r) { return r.ok ? r.json() : null; })
           .then(function(tools) {
             if (Array.isArray(tools) && tools.length > 0) {
               window.__nexa_tools_cache = tools;
+              try { sessionStorage.setItem('nexa_tools_cache', JSON.stringify(tools)); } catch(e) {}
               window.dispatchEvent(new CustomEvent('nexa:tools_updated', { detail: tools }));
             }
           })
@@ -329,25 +347,6 @@
 
     <script type="module" crossorigin src="/assets/index-DZT4_D0V.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-g2WHYVtL.css">
-  
-    <script>
-      (function() {
-        const originalError = console.error;
-        console.error = function(...args) {
-          originalError.apply(console, args);
-          const str = args.map(a => (typeof a === 'object' ? (a.stack || JSON.stringify(a)) : a)).join(' ');
-          if (str.includes('React') || str.includes('Error') || str.includes('ReferenceError') || str.includes('TypeError')) {
-            const div = document.createElement('div');
-            div.style.position = 'fixed';
-            div.style.top = '0'; div.style.left = '0'; div.style.width = '100%'; div.style.zIndex = '999999';
-            div.style.backgroundColor = 'darkred'; div.style.color = 'white'; div.style.padding = '20px';
-            div.style.fontFamily = 'monospace'; div.style.fontSize = '12px'; div.style.overflow = 'auto'; div.style.maxHeight = '100vh';
-            div.innerHTML = '<b>INTERCEPTED REACT CRASH:</b><br/><pre style="white-space: pre-wrap;">' + str + '</pre>';
-            document.body.appendChild(div);
-          }
-        };
-      })();
-    </script>
   
     <!-- Schema.org JSON-LD: Product Catalog ItemList -->
     <script type="application/ld+json">
@@ -1387,7 +1386,7 @@
                 <p style="font-size:12px; color:#a1a1aa; line-height:1.4;">Claude AI is an advanced artificial intelligence assistant designed to...</p>
               </div>
               <div style="border-top:1px solid #27272a; padding-top:12px; margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:15px; font-weight:800; color:#10b981;">PKR 2,500</span>
+                <span style="font-size:15px; font-weight:800; color:#10b981;">PKR 2,499</span>
                 <span style="font-size:12px; color:#f59e0b; font-weight:600;">View Plans →</span>
               </div>
             </a>
@@ -1596,6 +1595,19 @@
               </div>
               <div style="border-top:1px solid #27272a; padding-top:12px; margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
                 <span style="font-size:15px; font-weight:800; color:#10b981;">PKR 2,500</span>
+                <span style="font-size:12px; color:#f59e0b; font-weight:600;">View Plans →</span>
+              </div>
+            </a>
+          
+            <a href="/product/skillshare" style="background:#18181b; border:1px solid #27272a; border-radius:16px; padding:20px; text-decoration:none; color:#ffffff; display:flex; flex-direction:column; justify-content:space-between; transition:border-color 0.2s;">
+              <div>
+                <img src="https://nexadigitaltools.com/product-images/8e995b08a2b0b9fb69da8a5f72b5001c.png" alt="Skillshare" style="width:100%; height:140px; object-fit:contain; border-radius:10px; background:#121215; padding:10px; margin-bottom:12px;" />
+                <span style="font-size:11px; color:#f59e0b; background:rgba(245, 158, 11, 0.15); padding:3px 8px; border-radius:6px; font-weight:600;">Productivity</span>
+                <h3 style="font-size:17px; font-weight:700; margin:10px 0 6px;">Skillshare</h3>
+                <p style="font-size:12px; color:#a1a1aa; line-height:1.4;">Skillshare is an online learning platform offering creative and profes...</p>
+              </div>
+              <div style="border-top:1px solid #27272a; padding-top:12px; margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:15px; font-weight:800; color:#10b981;">PKR 1,598</span>
                 <span style="font-size:12px; color:#f59e0b; font-weight:600;">View Plans →</span>
               </div>
             </a>
@@ -1821,19 +1833,6 @@
               </div>
             </a>
           
-            <a href="/product/skillshare" style="background:#18181b; border:1px solid #27272a; border-radius:16px; padding:20px; text-decoration:none; color:#ffffff; display:flex; flex-direction:column; justify-content:space-between; transition:border-color 0.2s;">
-              <div>
-                <img src="https://nexadigitaltools.com/product-images/8e995b08a2b0b9fb69da8a5f72b5001c.png" alt="Skillshare" style="width:100%; height:140px; object-fit:contain; border-radius:10px; background:#121215; padding:10px; margin-bottom:12px;" />
-                <span style="font-size:11px; color:#f59e0b; background:rgba(245, 158, 11, 0.15); padding:3px 8px; border-radius:6px; font-weight:600;">Productivity</span>
-                <h3 style="font-size:17px; font-weight:700; margin:10px 0 6px;">Skillshare</h3>
-                <p style="font-size:12px; color:#a1a1aa; line-height:1.4;">Skillshare is an online learning platform offering creative and profes...</p>
-              </div>
-              <div style="border-top:1px solid #27272a; padding-top:12px; margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:15px; font-weight:800; color:#10b981;">PKR 16.2</span>
-                <span style="font-size:12px; color:#f59e0b; font-weight:600;">View Plans →</span>
-              </div>
-            </a>
-          
             <a href="/product/linkedin-sales-navigator-monthly" style="background:#18181b; border:1px solid #27272a; border-radius:16px; padding:20px; text-decoration:none; color:#ffffff; display:flex; flex-direction:column; justify-content:space-between; transition:border-color 0.2s;">
               <div>
                 <img src="https://nexadigitaltools.com/product-images/ba994d034bb8c7629c97743f9e41826f.png" alt="LinkedIn Sales Navigator Monthly" style="width:100%; height:140px; object-fit:contain; border-radius:10px; background:#121215; padding:10px; margin-bottom:12px;" />
@@ -1894,7 +1893,7 @@
                 <p style="font-size:12px; color:#a1a1aa; line-height:1.4;">Turnitin Instructor is the educator-focused version of Turnitin’s acad...</p>
               </div>
               <div style="border-top:1px solid #27272a; padding-top:12px; margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:15px; font-weight:800; color:#10b981;">PKR 3.6</span>
+                <span style="font-size:15px; font-weight:800; color:#10b981;">PKR 2,199</span>
                 <span style="font-size:12px; color:#f59e0b; font-weight:600;">View Plans →</span>
               </div>
             </a>

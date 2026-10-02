@@ -7,7 +7,7 @@ const SETTINGS_ID = '066a4027-9df8-45ee-ac41-32f26f11a507';
 
 let memoryCache = null;
 let memoryCacheTime = 0;
-const CACHE_TTL = 15000; // 15 seconds memory cache
+const CACHE_TTL = 3000; // 3 seconds memory cache
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -17,18 +17,17 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   const urlStr = req.url || '';
-  const forceRefresh = urlStr.includes('refresh=1') || urlStr.includes('purge=1');
+  const forceRefresh = urlStr.includes('refresh=1') || urlStr.includes('purge=1') || urlStr.includes('t=');
   const now = Date.now();
 
-  // Instant response if memory cache is valid (< 15s) and not forced
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0');
+
+  // Instant response if memory cache is valid (< 3s) and not forced
   if (!forceRefresh && memoryCache && (now - memoryCacheTime < CACHE_TTL)) {
-    res.setHeader('Cache-Control', 'public, max-age=5, s-maxage=10, stale-while-revalidate=30');
     res.setHeader('X-Cache', 'HIT-MEMORY');
     return res.status(200).json(memoryCache);
   }
 
-  // Edge cache headers: 10s freshness + background stale-while-revalidate
-  res.setHeader('Cache-Control', 'public, max-age=5, s-maxage=10, stale-while-revalidate=30');
   res.setHeader('X-Cache', 'MISS');
 
   // 1. Try Supabase Live Tables in Ultra-Fast Parallel Queries

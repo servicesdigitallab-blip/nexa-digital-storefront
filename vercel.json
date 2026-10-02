@@ -61,6 +61,15 @@
       ]
     },
     {
+      "source": "/(og-image.jpg|og-image.png)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=43200"
+        }
+      ]
+    },
+    {
       "source": "/sitemap.xml",
       "headers": [
         {
@@ -142,6 +151,10 @@
     {
       "source": "/api/store/popular-picks",
       "destination": "/api/store-popular-picks.js"
+    },
+    {
+      "source": "/api/store/categories",
+      "destination": "/api/store-categories.js"
     },
     {
       "source": "/api/store/contact",

@@ -31,12 +31,19 @@
     <meta property="og:title" content="Buy Gemini 18 month in Pakistan (PKR 999) — Low Price | Nexa Digital Tools" />
     <meta property="og:description" content="Buy genuine Gemini 18 month in Pakistan for PKR 999 from Nexa Digital Tools (nexadigitaltools.com). Verified private subscription with EasyPaisa, JazzCash, instant 2-5 min WhatsApp delivery and full replacement warranty." />
     <meta property="og:image" content="https://nexadigitaltools.com/product-images/gemini-18.png" />
-    <meta property="og:image:secure_url" content="https://nexadigitaltools.com/og-image.jpg?v=2026" />
+    <meta property="og:image:secure_url" content="https://nexadigitaltools.com/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:alt" content="Nexa Digital Tools Logo" />
     <meta property="og:locale" content="en_US" />
+
+    <!-- Square Fallback for WhatsApp & Social Thumbnails -->
+    <meta property="og:image" content="https://nexadigitaltools.com/product-images/gemini-18.png" />
+    <meta property="og:image:secure_url" content="https://nexadigitaltools.com/logo.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:type" content="image/png" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -283,12 +290,23 @@
     <!-- Instant Fast Edge Pre-cache & Immediate Live Sync -->
     <script>
       (function() {
-        // High priority live fetch from Edge API (10ms response)
-        fetch('/api/store/tools', { priority: 'high' })
+        try {
+          var local = sessionStorage.getItem('nexa_tools_cache');
+          if (local) {
+            var parsed = JSON.parse(local);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              window.__nexa_tools_cache = parsed;
+            }
+          }
+        } catch(e) {}
+
+        // High priority live fetch bypassing edge cache
+        fetch('/api/store/tools?t=' + Date.now(), { priority: 'high', cache: 'no-store' })
           .then(function(r) { return r.ok ? r.json() : null; })
           .then(function(tools) {
             if (Array.isArray(tools) && tools.length > 0) {
               window.__nexa_tools_cache = tools;
+              try { sessionStorage.setItem('nexa_tools_cache', JSON.stringify(tools)); } catch(e) {}
               window.dispatchEvent(new CustomEvent('nexa:tools_updated', { detail: tools }));
             }
           })
@@ -329,25 +347,6 @@
 
     <script type="module" crossorigin src="/assets/index-DZT4_D0V.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-g2WHYVtL.css">
-  
-    <script>
-      (function() {
-        const originalError = console.error;
-        console.error = function(...args) {
-          originalError.apply(console, args);
-          const str = args.map(a => (typeof a === 'object' ? (a.stack || JSON.stringify(a)) : a)).join(' ');
-          if (str.includes('React') || str.includes('Error') || str.includes('ReferenceError') || str.includes('TypeError')) {
-            const div = document.createElement('div');
-            div.style.position = 'fixed';
-            div.style.top = '0'; div.style.left = '0'; div.style.width = '100%'; div.style.zIndex = '999999';
-            div.style.backgroundColor = 'darkred'; div.style.color = 'white'; div.style.padding = '20px';
-            div.style.fontFamily = 'monospace'; div.style.fontSize = '12px'; div.style.overflow = 'auto'; div.style.maxHeight = '100vh';
-            div.innerHTML = '<b>INTERCEPTED REACT CRASH:</b><br/><pre style="white-space: pre-wrap;">' + str + '</pre>';
-            document.body.appendChild(div);
-          }
-        };
-      })();
-    </script>
   
     <!-- Schema.org JSON-LD: Product Catalog ItemList -->
     <script type="application/ld+json">

@@ -284,7 +284,7 @@
       "id": "166c3fcc-56e4-41e6-8952-52ecd7114961",
       "name": "Claude AI",
       "description": "Claude AI is an advanced artificial intelligence assistant designed to provide thoughtful, human-like responses while helping users with writing, research, content analysis, and complex problem solving. It focuses on delivering clear, accurate, and context-aware outputs that make tasks easier and more efficient.",
-      "price": 2500,
+      "price": 2499,
       "image": "/product-images/81bb2feb52bd315eb1676cf67d8a2320.png",
       "category_id": "6230af5a-3103-4a36-bc56-edb18842798a",
       "status": "in_stock",
@@ -302,19 +302,19 @@
       "category_name": "AI Tools",
       "plans": [
         {
-          "id": "e427472f-2136-4b16-9a6e-9e3531c44f57",
+          "id": "c007e1be-6fae-49b7-9ea4-2b78daa3dfa2",
           "product_id": "166c3fcc-56e4-41e6-8952-52ecd7114961",
           "name": "Pro",
           "period": "month",
           "original_price": 5700,
-          "discounted_price": 2500,
+          "discounted_price": 2499,
           "popular": true,
           "discount": 0,
           "features": null,
-          "created_at": "2026-09-02T08:25:31.123346+00:00"
+          "created_at": "2026-09-13T07:19:15.257297+00:00"
         },
         {
-          "id": "46a4853d-ad49-459f-b4ff-3d1add092e62",
+          "id": "e25f4ae6-191b-4754-b75d-b2ef35b3f780",
           "product_id": "166c3fcc-56e4-41e6-8952-52ecd7114961",
           "name": "Max 5x",
           "period": "month",
@@ -323,10 +323,10 @@
           "popular": true,
           "discount": 0,
           "features": null,
-          "created_at": "2026-09-02T08:25:31.123346+00:00"
+          "created_at": "2026-09-13T07:19:15.257297+00:00"
         },
         {
-          "id": "1b067498-1959-4678-ac1b-091136267362",
+          "id": "bd1eb161-6615-4026-b330-cdc66d7843ee",
           "product_id": "166c3fcc-56e4-41e6-8952-52ecd7114961",
           "name": "Max 20x",
           "period": "month",
@@ -335,7 +335,7 @@
           "popular": false,
           "discount": 0,
           "features": null,
-          "created_at": "2026-09-02T08:25:31.123346+00:00"
+          "created_at": "2026-09-13T07:19:15.257297+00:00"
         }
       ],
       "features": [
@@ -353,68 +353,68 @@
       ],
       "faqs": [
         {
-          "id": "621f84e8-9bad-4483-b5bd-c690c812028f",
+          "id": "13e99768-8c52-4930-81e9-3c38e1225ef8",
           "product_id": "166c3fcc-56e4-41e6-8952-52ecd7114961",
           "question": "How is Claude AI delivered?",
           "answer": "Credentials are sent in 2-5 minutes after placing an order.",
           "sort_order": 0,
-          "created_at": "2026-09-02T08:25:32.079836+00:00"
+          "created_at": "2026-09-13T07:19:16.498731+00:00"
         },
         {
-          "id": "bb4a757e-660c-4633-9d16-0ff7a5cdc1dd",
+          "id": "d2453b63-bbac-4c16-aa6c-8dc44cff4cbb",
           "product_id": "166c3fcc-56e4-41e6-8952-52ecd7114961",
           "question": "What account type is provided?",
           "answer": "A genuine license for access.",
           "sort_order": 1,
-          "created_at": "2026-09-02T08:25:32.079836+00:00"
+          "created_at": "2026-09-13T07:19:16.498731+00:00"
         },
         {
-          "id": "9ad1c664-2578-4841-888d-587ff0a564a8",
+          "id": "20ec424d-15cf-4af3-b20c-f919ab96ffc3",
           "product_id": "166c3fcc-56e4-41e6-8952-52ecd7114961",
           "question": "Is there a warranty or guarantee on access?",
           "answer": "2-day refund guarantee.",
           "sort_order": 2,
-          "created_at": "2026-09-02T08:25:32.079836+00:00"
+          "created_at": "2026-09-13T07:19:16.498731+00:00"
         },
         {
-          "id": "a741340a-3b3a-47c1-a3b3-a3d7e0d766d1",
+          "id": "3a12b319-efa4-41a3-b535-711b11a66172",
           "product_id": "166c3fcc-56e4-41e6-8952-52ecd7114961",
           "question": "Can I use Claude AI in my region?",
           "answer": "Yes, it has global support.",
           "sort_order": 3,
-          "created_at": "2026-09-02T08:25:32.079836+00:00"
+          "created_at": "2026-09-13T07:19:16.498731+00:00"
         },
         {
-          "id": "86bcb284-5c92-43d3-b32a-2bc25d51bea7",
+          "id": "d75ad789-aa08-4849-b03f-0700d4ab15af",
           "product_id": "166c3fcc-56e4-41e6-8952-52ecd7114961",
           "question": "How do I log in to Claude AI?",
           "answer": "Credentials are provided upon order completion.",
           "sort_order": 4,
-          "created_at": "2026-09-02T08:25:32.079836+00:00"
+          "created_at": "2026-09-13T07:19:16.498731+00:00"
         },
         {
-          "id": "c8321d72-00e0-408e-afe1-a528ad81cc1e",
+          "id": "eebc5ca2-ea86-4eb5-866d-cc91c9dcd57a",
           "product_id": "166c3fcc-56e4-41e6-8952-52ecd7114961",
           "question": "What kind of customer support is available?",
           "answer": "WhatsApp support is available 24/7.",
           "sort_order": 5,
-          "created_at": "2026-09-02T08:25:32.079836+00:00"
+          "created_at": "2026-09-13T07:19:16.498731+00:00"
         },
         {
-          "id": "3a1be81d-068c-436c-9a67-571295270b8e",
+          "id": "4c08cd78-d550-401f-bc3e-06a51bbeabea",
           "product_id": "166c3fcc-56e4-41e6-8952-52ecd7114961",
           "question": "What if my access stops working?",
           "answer": "Contact customer support for assistance.",
           "sort_order": 6,
-          "created_at": "2026-09-02T08:25:32.079836+00:00"
+          "created_at": "2026-09-13T07:19:16.498731+00:00"
         },
         {
-          "id": "73116f59-3319-4fcb-9e13-f728cd327802",
+          "id": "67780dc8-48fc-4471-88e4-0a4f555a4e20",
           "product_id": "166c3fcc-56e4-41e6-8952-52ecd7114961",
           "question": "What is the validity period of the account?",
           "answer": "The account is valid until canceled.",
           "sort_order": 7,
-          "created_at": "2026-09-02T08:25:32.079836+00:00"
+          "created_at": "2026-09-13T07:19:16.498731+00:00"
         }
       ]
     },
@@ -1938,6 +1938,111 @@
       ]
     },
     {
+      "id": "2e204feb-febf-40a1-819e-12387d9c0345",
+      "name": "Skillshare",
+      "description": "Skillshare is an online learning platform offering creative and professional courses in design, business, photography, and more.",
+      "price": 1598,
+      "image": "/product-images/8e995b08a2b0b9fb69da8a5f72b5001c.png",
+      "category_id": "e42bb213-8565-41fc-8f77-e46adba0c6db",
+      "status": "in_stock",
+      "stock": 999,
+      "sort_order": 20,
+      "delivery_time": "30-90 minutes delivery",
+      "warranty": "Genuine license",
+      "refund_policy": "25-day refund guarantee",
+      "support_info": "Global support",
+      "whatsapp_message": "Hello! I'd like to order *Skillshare* ({currency} {price}). Please share details.",
+      "discount": 0,
+      "created_at": "2026-08-14T09:58:05.654399+00:00",
+      "updated_at": "2026-08-14T09:58:05.654399+00:00",
+      "slug": "skillshare",
+      "category_name": "Productivity",
+      "plans": [
+        {
+          "id": "f73236a6-1dde-4862-8f86-8af2ebef9abe",
+          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
+          "name": "Monthly",
+          "period": "month",
+          "original_price": 12000,
+          "discounted_price": 1598,
+          "popular": true,
+          "discount": 0,
+          "features": null,
+          "created_at": "2026-09-05T12:41:55.897629+00:00"
+        }
+      ],
+      "features": [
+        "Access to thousands of creative and professional courses",
+        "Short, practical classes focused on real skills",
+        "On-demand video lessons",
+        "Learn at your own pace, anytime and anywhere",
+        "Project-based learning",
+        "Connect with creative community",
+        "Expert-led instruction",
+        "Offline access to classes",
+        "Curated learning paths",
+        "Variety of skill levels"
+      ],
+      "faqs": [
+        {
+          "id": "3c3d1625-0703-43a1-868a-130e9ae6c09c",
+          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
+          "question": "What kind of courses does Skillshare offer?",
+          "answer": "Skillshare offers creative and professional courses in various fields including design, business, photography, and more.",
+          "sort_order": 0,
+          "created_at": "2026-09-05T12:41:57.557777+00:00"
+        },
+        {
+          "id": "fcd03018-1bdc-44a5-b891-d7804de3e0db",
+          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
+          "question": "Is Skillshare a subscription service?",
+          "answer": "Yes, Skillshare operates on a subscription model.",
+          "sort_order": 1,
+          "created_at": "2026-09-05T12:41:57.557777+00:00"
+        },
+        {
+          "id": "6165fe88-26d1-4012-8dc1-8bd47d5827d2",
+          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
+          "question": "Can I access courses offline?",
+          "answer": "Yes, Skillshare allows you to access courses offline.",
+          "sort_order": 2,
+          "created_at": "2026-09-05T12:41:57.557777+00:00"
+        },
+        {
+          "id": "821dfacc-116d-4e8e-b7ca-e1b7807dc81c",
+          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
+          "question": "What payment methods are accepted?",
+          "answer": "We accept EasyPaisa, JazzCash, UPI, Binance, BTC/USDT.",
+          "sort_order": 3,
+          "created_at": "2026-09-05T12:41:57.557777+00:00"
+        },
+        {
+          "id": "a7a88666-8c4b-4399-813c-5e296ad1b97b",
+          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
+          "question": "How do I contact customer support if I have an issue?",
+          "answer": "You can contact customer support via WhatsApp 24/7.",
+          "sort_order": 4,
+          "created_at": "2026-09-05T12:41:57.557777+00:00"
+        },
+        {
+          "id": "4f60ddaf-1c3c-4eb7-8b00-eb2621b4bfe1",
+          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
+          "question": "Are there free trial options available?",
+          "answer": "Yes, Skillshare offers free trial options.",
+          "sort_order": 5,
+          "created_at": "2026-09-05T12:41:57.557777+00:00"
+        },
+        {
+          "id": "76cb4fbe-14ea-4ee1-969a-661d0e181527",
+          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
+          "question": "Does my subscription automatically renew?",
+          "answer": "Yes, the subscription will automatically renew unless cancelled.",
+          "sort_order": 6,
+          "created_at": "2026-09-05T12:41:57.557777+00:00"
+        }
+      ]
+    },
+    {
       "id": "d4a08403-822d-4b6a-886c-1886a831f216",
       "name": "Luma Ai",
       "description": "Luma AI is a powerful AI video and visual creation tool designed to generate high-quality cinematic visuals using artificial intelligence. It is widely used for creating realistic AI videos, dynamic scenes, and visually rich content that looks professional and immersive. It helps turn simple ideas into visually impressive AI videos without requiring advanced editing or technical skills.",
@@ -1946,7 +2051,7 @@
       "category_id": "6230af5a-3103-4a36-bc56-edb18842798a",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 20,
+      "sort_order": 21,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "2-day refund guarantee",
       "refund_policy": "25-day refund guarantee",
@@ -2052,7 +2157,7 @@
       "category_id": "6230af5a-3103-4a36-bc56-edb18842798a",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 21,
+      "sort_order": 22,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license with a 2-day refund guarantee",
       "refund_policy": "25-day refund guarantee",
@@ -2151,7 +2256,7 @@
       "category_id": "47328795-9697-45ac-93a6-0aef0149b7f0",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 22,
+      "sort_order": 23,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "2-day refund guarantee",
       "refund_policy": "25-day refund guarantee",
@@ -2287,7 +2392,7 @@
       "category_id": "e42bb213-8565-41fc-8f77-e46adba0c6db",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 23,
+      "sort_order": 24,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license",
       "refund_policy": "25-day refund guarantee",
@@ -2370,7 +2475,7 @@
       "category_id": "6230af5a-3103-4a36-bc56-edb18842798a",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 24,
+      "sort_order": 25,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license",
       "refund_policy": "25-day refund guarantee",
@@ -2466,7 +2571,7 @@
       "category_id": "47328795-9697-45ac-93a6-0aef0149b7f0",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 25,
+      "sort_order": 26,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license",
       "refund_policy": "25-day refund guarantee",
@@ -2575,7 +2680,7 @@
       "category_id": "6230af5a-3103-4a36-bc56-edb18842798a",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 26,
+      "sort_order": 27,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license",
       "refund_policy": "25-day refund guarantee",
@@ -2658,7 +2763,7 @@
       "category_id": "6230af5a-3103-4a36-bc56-edb18842798a",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 27,
+      "sort_order": 28,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license",
       "refund_policy": "25-day refund guarantee",
@@ -2779,7 +2884,7 @@
       "category_id": "e42bb213-8565-41fc-8f77-e46adba0c6db",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 28,
+      "sort_order": 29,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license",
       "refund_policy": "25-day refund guarantee",
@@ -2884,7 +2989,7 @@
       "category_id": "e42bb213-8565-41fc-8f77-e46adba0c6db",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 29,
+      "sort_order": 30,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license, 2-day refund guarantee",
       "refund_policy": "25-day refund guarantee",
@@ -2971,7 +3076,7 @@
       "category_id": "6230af5a-3103-4a36-bc56-edb18842798a",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 30,
+      "sort_order": 31,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license",
       "refund_policy": "25-day refund guarantee",
@@ -3066,7 +3171,7 @@
       "category_id": "6230af5a-3103-4a36-bc56-edb18842798a",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 31,
+      "sort_order": 32,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license",
       "refund_policy": "25-day refund guarantee",
@@ -3165,7 +3270,7 @@
       "category_id": "6230af5a-3103-4a36-bc56-edb18842798a",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 32,
+      "sort_order": 33,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license",
       "refund_policy": "25-day refund guarantee",
@@ -3286,7 +3391,7 @@
       "category_id": "e42bb213-8565-41fc-8f77-e46adba0c6db",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 33,
+      "sort_order": 34,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license",
       "refund_policy": "25-day refund guarantee",
@@ -3392,7 +3497,7 @@
       "category_id": "e42bb213-8565-41fc-8f77-e46adba0c6db",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 34,
+      "sort_order": 35,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license",
       "refund_policy": "25-day refund guarantee",
@@ -3478,7 +3583,7 @@
       "category_id": "6230af5a-3103-4a36-bc56-edb18842798a",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 35,
+      "sort_order": 36,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license",
       "refund_policy": "25-day refund guarantee",
@@ -3586,7 +3691,7 @@
       "category_id": "6230af5a-3103-4a36-bc56-edb18842798a",
       "status": "in_stock",
       "stock": 999,
-      "sort_order": 36,
+      "sort_order": 37,
       "delivery_time": "30-90 minutes delivery",
       "warranty": "Genuine license",
       "refund_policy": "25-day refund guarantee",
@@ -3658,135 +3763,6 @@
           "answer": "We accept Easypaisa, JazzCash, bank transfer, and crypto (USDT). Payment details are shared on WhatsApp at checkout.",
           "sort_order": 3,
           "created_at": "2026-08-14T09:58:01.636458+00:00"
-        }
-      ]
-    },
-    {
-      "id": "2e204feb-febf-40a1-819e-12387d9c0345",
-      "name": "Skillshare",
-      "description": "Skillshare is an online learning platform offering creative and professional courses in design, business, photography, and more.",
-      "price": 16.2,
-      "image": "/product-images/8e995b08a2b0b9fb69da8a5f72b5001c.png",
-      "category_id": "e42bb213-8565-41fc-8f77-e46adba0c6db",
-      "status": "in_stock",
-      "stock": 999,
-      "sort_order": 37,
-      "delivery_time": "30-90 minutes delivery",
-      "warranty": "Genuine license",
-      "refund_policy": "25-day refund guarantee",
-      "support_info": "Global support",
-      "whatsapp_message": "Hello! I'd like to order *Skillshare* ({currency} {price}). Please share details.",
-      "discount": 0,
-      "created_at": "2026-08-14T09:58:05.654399+00:00",
-      "updated_at": "2026-08-14T09:58:05.654399+00:00",
-      "slug": "skillshare",
-      "category_name": "Productivity",
-      "plans": [
-        {
-          "id": "fc32cc1d-f761-41bf-83e7-44f8b49b9c72",
-          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
-          "name": "Monthly",
-          "period": "month",
-          "original_price": 25.92,
-          "discounted_price": 16.2,
-          "popular": false,
-          "discount": 0,
-          "features": null,
-          "created_at": "2026-08-14T09:58:05.928163+00:00"
-        },
-        {
-          "id": "1995bce5-8624-463e-acec-e7fa6f96c0bd",
-          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
-          "name": "Yearly",
-          "period": "year",
-          "original_price": 259.2,
-          "discounted_price": 162,
-          "popular": true,
-          "discount": 0,
-          "features": null,
-          "created_at": "2026-08-14T09:58:06.321437+00:00"
-        },
-        {
-          "id": "da5f3294-e074-4d50-a484-4ae7a0bab9dc",
-          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
-          "name": "Lifetime",
-          "period": "lifetime",
-          "original_price": 648,
-          "discounted_price": 356.4,
-          "popular": false,
-          "discount": 0,
-          "features": null,
-          "created_at": "2026-08-14T09:58:06.582558+00:00"
-        }
-      ],
-      "features": [
-        "Access to thousands of creative and professional courses",
-        "Short, practical classes focused on real skills",
-        "On-demand video lessons",
-        "Learn at your own pace, anytime and anywhere",
-        "Project-based learning",
-        "Connect with creative community",
-        "Expert-led instruction",
-        "Offline access to classes",
-        "Curated learning paths",
-        "Variety of skill levels"
-      ],
-      "faqs": [
-        {
-          "id": "77287cfd-9e2d-469c-b119-9aa5ac0accf7",
-          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
-          "question": "What kind of courses does Skillshare offer?",
-          "answer": "Skillshare offers creative and professional courses in various fields including design, business, photography, and more.",
-          "sort_order": 0,
-          "created_at": "2026-08-14T09:58:06.865996+00:00"
-        },
-        {
-          "id": "54d8fae3-4780-4d21-b0b3-b832aade249a",
-          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
-          "question": "Is Skillshare a subscription service?",
-          "answer": "Yes, Skillshare operates on a subscription model.",
-          "sort_order": 1,
-          "created_at": "2026-08-14T09:58:07.115913+00:00"
-        },
-        {
-          "id": "55d04079-e784-4591-bddc-ba7c582118ca",
-          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
-          "question": "Can I access courses offline?",
-          "answer": "Yes, Skillshare allows you to access courses offline.",
-          "sort_order": 2,
-          "created_at": "2026-08-14T09:58:07.410823+00:00"
-        },
-        {
-          "id": "55783555-2eec-4bb4-95b9-b35e994de1fe",
-          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
-          "question": "What payment methods are accepted?",
-          "answer": "We accept EasyPaisa, JazzCash, UPI, Binance, BTC/USDT.",
-          "sort_order": 3,
-          "created_at": "2026-08-14T09:58:07.669071+00:00"
-        },
-        {
-          "id": "91bb5efa-cb1f-421d-aafd-b80f09de9cc0",
-          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
-          "question": "How do I contact customer support if I have an issue?",
-          "answer": "You can contact customer support via WhatsApp 24/7.",
-          "sort_order": 4,
-          "created_at": "2026-08-14T09:58:07.94953+00:00"
-        },
-        {
-          "id": "8e77cd40-e2b5-489a-8a82-c685aab61a0c",
-          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
-          "question": "Are there free trial options available?",
-          "answer": "Yes, Skillshare offers free trial options.",
-          "sort_order": 5,
-          "created_at": "2026-08-14T09:58:08.196686+00:00"
-        },
-        {
-          "id": "32c96714-5ab2-4c0f-abe1-302735b44074",
-          "product_id": "2e204feb-febf-40a1-819e-12387d9c0345",
-          "question": "Does my subscription automatically renew?",
-          "answer": "Yes, the subscription will automatically renew unless cancelled.",
-          "sort_order": 6,
-          "created_at": "2026-08-14T09:58:08.47856+00:00"
         }
       ]
     },
@@ -4220,7 +4196,7 @@
       "id": "f1a93421-75df-40db-bec7-74ee571cc07b",
       "name": "Turnitin Instructor",
       "description": "Turnitin Instructor is the educator-focused version of Turnitin’s academic integrity platform used to check student writing for plagiarism and similarity against a vast database of academic content and web pages. It helps teachers, professors, and academic professionals manage assignments, detect copied content, and uphold writing integrity for courses.",
-      "price": 3.6,
+      "price": 2199,
       "image": "/product-images/6b734f155eda1567083084653b0c1cac.png",
       "category_id": "e42bb213-8565-41fc-8f77-e46adba0c6db",
       "status": "in_stock",
@@ -4238,91 +4214,94 @@
       "category_name": "Productivity",
       "plans": [
         {
-          "id": "cdde5e57-6774-45a3-b35c-84b4b0d60c60",
+          "id": "ce891816-1495-4a25-85ac-859c605c9b3a",
           "product_id": "f1a93421-75df-40db-bec7-74ee571cc07b",
           "name": "Monthly",
           "period": "month",
           "original_price": 5.76,
-          "discounted_price": 3.6,
+          "discounted_price": 2199,
           "popular": false,
           "discount": 0,
           "features": null,
-          "created_at": "2026-08-14T09:58:36.595863+00:00"
+          "created_at": "2026-09-05T12:46:51.244366+00:00"
         },
         {
-          "id": "6287a606-2d4c-4f2c-8601-0c3b9fb090a1",
+          "id": "c6fd472b-5356-4eb1-8769-8fb3a4146837",
           "product_id": "f1a93421-75df-40db-bec7-74ee571cc07b",
-          "name": "Yearly",
-          "period": "year",
-          "original_price": 57.6,
-          "discounted_price": 36,
-          "popular": true,
-          "discount": 0,
-          "features": null,
-          "created_at": "2026-08-14T09:58:36.918273+00:00"
-        },
-        {
-          "id": "f16cc438-7c17-4237-96f5-e6cca89dc8cb",
-          "product_id": "f1a93421-75df-40db-bec7-74ee571cc07b",
-          "name": "Lifetime",
-          "period": "lifetime",
-          "original_price": 144,
-          "discounted_price": 79.2,
+          "name": "Monthly",
+          "period": "month",
+          "original_price": 5.76,
+          "discounted_price": 2199,
           "popular": false,
           "discount": 0,
           "features": null,
-          "created_at": "2026-08-14T09:58:37.202331+00:00"
+          "created_at": "2026-09-05T12:46:51.272743+00:00"
         }
       ],
       "features": [
         "Plagiarism and similarity detection",
+        "Plagiarism and similarity detection",
+        "Similarity & plagiarism reports for submitted work",
         "Similarity & plagiarism reports for submitted work",
         "Comprehensive academic content database",
+        "Comprehensive academic content database",
+        "Comparison against extensive database of student papers, publications, and web content",
         "Comparison against extensive database of student papers, publications, and web content",
         "Assignment management tools",
+        "Assignment management tools",
+        "Detailed match breakdown highlighting similar text",
         "Detailed match breakdown highlighting similar text",
         "Assignment management workflows for instructors",
+        "Assignment management workflows for instructors",
+        "Originality reports for student work",
         "Originality reports for student work",
         "View and grade student submissions directly within the system",
+        "View and grade student submissions directly within the system",
+        "Feedback Studio for grading",
         "Feedback Studio for grading",
         "Integrates with learning management systems",
+        "Integrates with learning management systems",
+        "Supports various document types",
         "Supports various document types",
         "Authorship investigation capabilities",
+        "Authorship investigation capabilities",
         "Promotes academic integrity",
+        "Promotes academic integrity",
+        "Educator-focused interface",
         "Educator-focused interface"
       ],
       "faqs": [
         {
-          "id": "c87fb3a2-6529-4ec1-ab71-a39fddf5855e",
+          "id": "03d0cce6-9853-487a-8a91-11c9fee59c07",
           "product_id": "f1a93421-75df-40db-bec7-74ee571cc07b",
           "question": "How fast is the delivery?",
           "answer": "Most Turnitin Instructor orders are delivered within 2-5 minutes on WhatsApp after payment confirmation.",
           "sort_order": 0,
-          "created_at": "2026-08-14T09:58:37.456387+00:00"
+          "created_at": "2026-09-05T12:46:53.226483+00:00"
         },
         {
-          "id": "6e5daffc-b92e-4f3f-9c10-e2a9c6e27561",
+          "id": "41e931d6-4da7-4c12-87a3-b7d14f00b61d",
           "product_id": "f1a93421-75df-40db-bec7-74ee571cc07b",
           "question": "Is this a genuine subscription?",
           "answer": "Yes, Turnitin Instructor is 100% genuine and legally sourced. You get access to the official platform with all features unlocked.",
           "sort_order": 1,
-          "created_at": "2026-08-14T09:58:37.738049+00:00"
+          "created_at": "2026-09-05T12:46:53.226483+00:00"
         },
         {
-          "id": "f02e0440-4f72-49ab-9810-fcacdaf92b5d",
+          "id": "00f2d7d4-15f8-4b6a-922b-2975832e8857",
           "product_id": "f1a93421-75df-40db-bec7-74ee571cc07b",
           "question": "What if it stops working?",
           "answer": "We offer a full 2-day refund guarantee. If Turnitin Instructor stops working within the plan period, we will replace it or refund you.",
           "sort_order": 2,
-          "created_at": "2026-08-14T09:58:37.993617+00:00"
+          "created_at": "2026-09-05T12:46:53.226483+00:00"
         },
         {
-          "id": "641f42c2-6566-4f8e-b711-701d6eb68c1b",
+          "id": "8b4c9d66-4c5e-459c-a04b-05486dda1f40",
           "product_id": "f1a93421-75df-40db-bec7-74ee571cc07b",
           "question": "Which payment methods do you accept?",
           "answer": "We accept Easypaisa, JazzCash, bank transfer, and crypto (USDT). Payment details are shared on WhatsApp at checkout.",
           "sort_order": 3,
-          "created_at": "2026-08-14T09:58:38.274528+00:00"
+          "created_at": "2026-09-05T12:46:53.226483+00:00"
         }
       ]
     },
