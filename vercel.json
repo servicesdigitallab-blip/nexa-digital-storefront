@@ -30,6 +30,10 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable, stale-while-revalidate=86400"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
         }
       ]
     },
@@ -39,6 +43,10 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable, stale-while-revalidate=86400"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
         }
       ]
     },
@@ -48,6 +56,10 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
         }
       ]
     },
@@ -57,6 +69,10 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
         }
       ]
     },
@@ -128,19 +144,6 @@
           "value": "nosniff"
         }
       ]
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.nexadigitaltools.com"
-        }
-      ],
-      "destination": "https://nexadigitaltools.com/:path*",
-      "permanent": true
     }
   ],
   "rewrites": [
